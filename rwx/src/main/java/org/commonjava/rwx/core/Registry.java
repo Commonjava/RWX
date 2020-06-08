@@ -56,7 +56,7 @@ public class Registry
         return renderer.render( obj );
     }
 
-    public boolean hasRender( Class type )
+    public boolean hasRenderer( Class type )
     {
         return rendererMap.get( type ) != null;
     }
