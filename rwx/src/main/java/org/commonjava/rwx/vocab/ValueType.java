@@ -117,7 +117,7 @@ public enum ValueType
             }
             else if ( value instanceof Integer )
             {
-                return new Long( (Integer) value );
+                return Long.valueOf( (Integer) value );
             }
             throw new ClassCastException( "Can not cast " + value.getClass() + " to Long" );
         }
