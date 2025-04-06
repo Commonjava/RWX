@@ -25,17 +25,15 @@ import org.commonjava.rwx.util.ProcessorUtils;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
-import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
@@ -79,6 +77,11 @@ public class AnnoProcessor
     private static final String REGISTRY_TEMPLATE = "Registry.groovy";
 
     final GStringTemplateEngine engine = new GStringTemplateEngine();
+
+    public SourceVersion getSupportedSourceVersion()
+    {
+        return SourceVersion.latest();
+    }
 
     @Override
     public boolean process( Set<? extends TypeElement> annotations, RoundEnvironment roundEnv )
