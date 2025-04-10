@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (jdcasey@commonjava.org)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -77,4 +77,3 @@ public class SimpleRWXMapperTest
     }
 
 }
-
