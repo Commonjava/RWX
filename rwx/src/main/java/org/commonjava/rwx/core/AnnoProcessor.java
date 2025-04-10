@@ -19,8 +19,13 @@ import groovy.lang.Writable;
 import groovy.text.GStringTemplateEngine;
 import groovy.text.Template;
 import org.apache.commons.io.IOUtils;
-import org.commonjava.rwx.anno.*;
+import org.commonjava.rwx.anno.ArrayPart;
 import org.commonjava.rwx.anno.Converter;
+import org.commonjava.rwx.anno.DataIndex;
+import org.commonjava.rwx.anno.DataKey;
+import org.commonjava.rwx.anno.Request;
+import org.commonjava.rwx.anno.Response;
+import org.commonjava.rwx.anno.StructPart;
 import org.commonjava.rwx.util.ProcessorUtils;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -40,7 +45,6 @@ import javax.tools.StandardLocation;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -343,7 +347,7 @@ public class AnnoProcessor
 
         Converter converter = getConverter( e );
 
-        if (converter != null)
+        if ( converter != null )
         {
             item.setConverter( getConverterQName( converter ) );
         }

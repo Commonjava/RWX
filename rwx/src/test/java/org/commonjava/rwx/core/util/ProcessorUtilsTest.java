@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by ruhan on 8/1/17.
@@ -52,12 +53,12 @@ public class ProcessorUtilsTest
     public void getElementClassByTypeTest()
     {
         String type = "java.util.List<java.lang.String>";
-        assertEquals("java.lang.String", getElementClassByType(type));
+        assertEquals( "java.lang.String", getElementClassByType( type ) );
 
         type = "List<java.lang.String>";
-        assertEquals("java.lang.String", getElementClassByType(type));
+        assertEquals( "java.lang.String", getElementClassByType( type ) );
 
         type = "List";
-        assertEquals(null, getElementClassByType(type));
+        assertNull( getElementClassByType( type ) );
     }
 }

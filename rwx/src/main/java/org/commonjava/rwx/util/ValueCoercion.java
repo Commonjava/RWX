@@ -19,8 +19,7 @@ import org.commonjava.rwx.error.CoercionException;
 
 public abstract class ValueCoercion
 {
-
-    private String description;
+    private final String description;
 
     protected ValueCoercion( String description )
     {

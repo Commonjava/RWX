@@ -17,13 +17,14 @@ package org.commonjava.rwx.test.koji;
 
 import org.commonjava.rwx.api.RWXMapper;
 import org.commonjava.rwx.test.AbstractTest;
-import org.commonjava.rwx.test.simple.RequestWithOneParam;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * Created by ruhan on 8/2/17.
@@ -113,7 +114,7 @@ public class KojiRWXMapperTest
         assertEquals( "org.dashbuilder-dashbuilder-parent-metadata", buildInfo.getName() );
         assertEquals( "1", buildInfo.getRelease() );
         assertEquals( "0.4.0.Final_10", buildInfo.getVersion() );
-        assertEquals( null, buildInfo.getExtra() );
+        assertNull( buildInfo.getExtra() );
     }
 
     @Test
@@ -123,7 +124,7 @@ public class KojiRWXMapperTest
         ListBuildResponse parsed =
                         new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ), ListBuildResponse.class );
 
-        assertEquals( null, parsed.getBuilds() );
+        assertNull( parsed.getBuilds() );
 
         String rendered = new RWXMapper().render( parsed );
 
@@ -155,11 +156,11 @@ public class KojiRWXMapperTest
         for ( KojiTagInfo tag : tags )
         {
             assertEquals( Boolean.FALSE, tag.getLocked() );
-            assertEquals( true, tag.getMavenSupport() );
-            assertEquals( true, tag.getMavenIncludeAll() );
-            assertEquals( null, tag.getPermission() );
-            assertEquals( null, tag.getPermissionId() );
-            assertEquals( null, tag.getArches() );
+            assertTrue( tag.getMavenSupport() );
+            assertTrue( tag.getMavenIncludeAll() );
+            assertNull( tag.getPermission() );
+            assertNull( tag.getPermissionId() );
+            assertNull( tag.getArches() );
         }
 
         KojiTagInfo tag0 = tags.get( 0 );

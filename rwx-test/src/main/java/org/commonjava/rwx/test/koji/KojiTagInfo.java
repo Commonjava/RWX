@@ -52,7 +52,7 @@ public class KojiTagInfo
 
     public KojiTagInfo(){}
 
-    public KojiTagInfo( String name)
+    public KojiTagInfo( String name )
     {
         this.name = name;
     }
@@ -84,7 +84,7 @@ public class KojiTagInfo
 
     public boolean isLocked()
     {
-        return locked;
+        return locked != null && locked;
     }
 
     public boolean getMavenSupport()

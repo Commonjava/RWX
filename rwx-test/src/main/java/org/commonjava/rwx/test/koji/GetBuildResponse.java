@@ -24,7 +24,7 @@ import org.commonjava.rwx.anno.Response;
 @Response
 public class GetBuildResponse
 {
-    @DataIndex(0)
+    @DataIndex( 0 )
     private KojiBuildInfo buildInfo;
 
     public KojiBuildInfo getBuildInfo()

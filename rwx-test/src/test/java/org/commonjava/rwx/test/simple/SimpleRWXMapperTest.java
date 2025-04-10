@@ -16,9 +16,7 @@
 package org.commonjava.rwx.test.simple;
 
 import org.commonjava.rwx.api.RWXMapper;
-import org.commonjava.rwx.core.Registry;
 import org.commonjava.rwx.test.AbstractTest;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -56,7 +54,7 @@ public class SimpleRWXMapperTest
     public void roundTrip_RequestWithOneArrayParamTest() throws Exception
     {
         RequestWithOneArrayParam requst = new RequestWithOneArrayParam();
-        List<String> array = Arrays.asList( new String[] { "test1", "test2" } );
+        List<String> array = Arrays.asList( "test1", "test2" );
         requst.setArray( array );
         String request = new RWXMapper().render( requst );
         String expected = getXMLStringIgnoreFormat( "requestWithOneArrayParam" );
@@ -75,5 +73,4 @@ public class SimpleRWXMapperTest
         SimpleResponse response = new RWXMapper().parse( stream, SimpleResponse.class );
         assertEquals( 18.24668429131D, response.getValue() );
     }
-
 }

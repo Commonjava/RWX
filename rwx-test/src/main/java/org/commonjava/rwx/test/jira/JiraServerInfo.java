@@ -20,11 +20,16 @@ package org.commonjava.rwx.test.jira;
  */
 public final class JiraServerInfo extends AbstractJiraServerInfo
 {
-    private String version;
-    private String baseUrl;
-    private String buildDate;
-    private int buildNumber;
+    private final String version;
+
+    private final String baseUrl;
+
+    private final String buildDate;
+
+    private final int buildNumber;
+
     private String edition;
+
     private String serverTime;
 
     public JiraServerInfo( String version, String baseUrl, String buildDate, int buildNumber )

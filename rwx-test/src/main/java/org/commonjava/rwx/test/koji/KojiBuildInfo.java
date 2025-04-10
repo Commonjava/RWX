@@ -100,7 +100,7 @@ public class KojiBuildInfo
 
     public KojiBuildInfo() {}
 
-    public KojiBuildInfo(int id, int packageId, String name, String version, String release)
+    public KojiBuildInfo( int id, int packageId, String name, String version, String release )
     {
         setId( id );
         setPackageId( packageId );

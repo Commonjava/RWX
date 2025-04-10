@@ -36,14 +36,19 @@ import static org.commonjava.rwx.vocab.XmlRpcConstants.*;
  */
 public class RenderUtils
 {
-    private static XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+    private static final XMLOutputFactory OUTPUT_FACTORY = XMLOutputFactory.newInstance();
+
+    private RenderUtils()
+    {
+        throw new UnsupportedOperationException( "This is a utility class and cannot be instantiated" );
+    }
 
     /**
      * Serialize a MethodCall, MethodResponse, Map, or List object to XML string.
      *
-     * @param rpcObject
-     * @return
-     * @throws XmlRpcException
+     * @param rpcObject the object to be serialized
+     * @return the XML string
+     * @throws XmlRpcException if the object cannot be serialized
      */
     public static String toXMLString( Object rpcObject ) throws XmlRpcException
     {
@@ -55,13 +60,13 @@ public class RenderUtils
         {
             return toResponseXMLString( (MethodResponse) rpcObject );
         }
-        else if ( rpcObject instanceof Map )
+        else if ( rpcObject instanceof Map<?, ?> )
         {
-            return toStructPartXMLString( (Map) rpcObject );
+            return toStructPartXMLString( (Map<String, Object>) rpcObject );
         }
         else if ( rpcObject instanceof List )
         {
-            return toArrayPartXMLString( (List) rpcObject );
+            return toArrayPartXMLString( (List<Object>) rpcObject );
         }
         else
         {
@@ -69,12 +74,12 @@ public class RenderUtils
         }
     }
 
-    private static String toStructPartXMLString( Map rpcObject ) throws XmlRpcException
+    private static String toStructPartXMLString( Map<String, Object> rpcObject ) throws XmlRpcException
     {
         StringWriter result = new StringWriter();
         try
         {
-            XMLStreamWriter w = outputFactory.createXMLStreamWriter( result );
+            XMLStreamWriter w = OUTPUT_FACTORY.createXMLStreamWriter( result );
             writeStruct( w, rpcObject );
             w.close();
         }
@@ -85,12 +90,12 @@ public class RenderUtils
         return result.toString();
     }
 
-    private static String toArrayPartXMLString( List rpcObject ) throws XmlRpcException
+    private static String toArrayPartXMLString( List<Object> rpcObject ) throws XmlRpcException
     {
         StringWriter result = new StringWriter();
         try
         {
-            XMLStreamWriter w = outputFactory.createXMLStreamWriter( result );
+            XMLStreamWriter w = OUTPUT_FACTORY.createXMLStreamWriter( result );
             writeArray( w, rpcObject );
             w.close();
         }
@@ -106,7 +111,7 @@ public class RenderUtils
         StringWriter result = new StringWriter();
         try
         {
-            XMLStreamWriter w = outputFactory.createXMLStreamWriter( result );
+            XMLStreamWriter w = OUTPUT_FACTORY.createXMLStreamWriter( result );
             w.writeStartDocument();
             w.writeStartElement( RESPONSE );
             List<Object> params = methodResponse.getParams();
@@ -128,7 +133,7 @@ public class RenderUtils
         StringWriter result = new StringWriter();
         try
         {
-            XMLStreamWriter w = outputFactory.createXMLStreamWriter( result );
+            XMLStreamWriter w = OUTPUT_FACTORY.createXMLStreamWriter( result );
             w.writeStartDocument();
             w.writeStartElement( REQUEST );
             w.writeStartElement( METHOD_NAME );
@@ -169,11 +174,11 @@ public class RenderUtils
 
         if ( object instanceof List )
         {
-            writeArray( w, (List) object );
+            writeArray( w, (List<Object>) object );
         }
-        else if ( object instanceof Map )
+        else if ( object instanceof Map<?, ?> )
         {
-            writeStruct( w, (Map) object );
+            writeStruct( w, (Map<String, Object>) object );
         }
         else
         {

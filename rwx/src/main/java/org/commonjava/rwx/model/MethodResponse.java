@@ -19,13 +19,14 @@ package org.commonjava.rwx.model;
  * Responses are much like requests. If the response is successful - the procedure was found,
  * executed correctly, and returned results - then the XML-RPC response will look much like a request,
  * except that the methodCall element is replaced by a methodResponse and there is no methodName.
- *
+ * <p>
  * Responses follow some additional constraints:
- *
- * 1. An XML-RPC response can only contain one parameter.
- * 2. That parameter may be an array or a struct, so it is possible to return multiple values.
- * 3. It is always required to return a value in response. A "success value" - perhaps a Boolean set to true (1).
- *
+ * <ol>
+ * <li>An XML-RPC response can only contain one parameter.</li>
+ * <li>That parameter may be an array or a struct, so it is possible to return multiple values.</li>
+ * <li>It is always required to return a value in response. A "success value" - perhaps a Boolean set to true (1).</li>
+ * </ol>
+ * <p>
  * Created by ruhan on 7/13/17.
  */
 public final class MethodResponse

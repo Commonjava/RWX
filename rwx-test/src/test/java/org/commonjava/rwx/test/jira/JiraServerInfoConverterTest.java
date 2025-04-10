@@ -16,10 +16,7 @@
 package org.commonjava.rwx.test.jira;
 
 import org.commonjava.rwx.api.RWXMapper;
-import org.commonjava.rwx.core.Registry;
 import org.commonjava.rwx.test.AbstractTest;
-import org.commonjava.rwx.test.generated.Test_Registry;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;

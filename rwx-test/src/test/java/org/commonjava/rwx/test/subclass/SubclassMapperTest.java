@@ -22,6 +22,7 @@ import org.junit.Test;
 import java.io.InputStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by ruhan on 12/19/17.
@@ -33,6 +34,7 @@ public class SubclassMapperTest
     public void renderer() throws Exception
     {
         String result = new RWXMapper().render( getInstance() );
+        assertNotNull( result );
     }
 
     @Test
@@ -73,6 +75,4 @@ public class SubclassMapperTest
         response.setValue( value );
         return response;
     }
-
 }
-

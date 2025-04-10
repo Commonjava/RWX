@@ -23,12 +23,11 @@ import org.commonjava.rwx.vocab.Nil;
 import org.junit.Test;
 
 import javax.xml.stream.XMLStreamException;
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertSame;
 import static junit.framework.TestCase.assertTrue;
 
 /**
@@ -39,7 +38,7 @@ public class XmlRpcParserTest
 {
 
     @Test
-    public void simpleRequestTest() throws IOException, XMLStreamException, XmlRpcException
+    public void simpleRequestTest() throws XMLStreamException, XmlRpcException
     {
         final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "simpleRequest" ) );
         Object object = parser.parse();
@@ -49,11 +48,11 @@ public class XmlRpcParserTest
         MethodCall request = (MethodCall) object;
 
         String methodName = request.getMethodName();
-        assertTrue( "foo".equals( methodName ) );
+        assertEquals( "foo", methodName );
     }
 
     @Test
-    public void requestWithOneParamTest() throws IOException, XMLStreamException, XmlRpcException
+    public void requestWithOneParamTest() throws XMLStreamException, XmlRpcException
     {
         final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithOneParam" ) );
         Object object = parser.parse();
@@ -61,15 +60,15 @@ public class XmlRpcParserTest
         MethodCall request = (MethodCall) object;
         List<Object> params = request.getParams();
 
-        assertTrue( params.size() == 1 );
-        assertTrue( "test".equals( params.get( 0 ) ) );
+        assertEquals( 1, params.size() );
+        assertEquals( "test", params.get( 0 ) );
 
         String methodName = request.getMethodName();
-        assertTrue( "foo".equals( methodName ) );
+        assertEquals( "foo", methodName );
     }
 
     @Test
-    public void requestWithOneStructParamTest() throws IOException, XMLStreamException, XmlRpcException
+    public void requestWithOneStructParamTest() throws XMLStreamException, XmlRpcException
     {
         final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithOneStructParam" ) );
         Object object = parser.parse();
@@ -77,20 +76,20 @@ public class XmlRpcParserTest
         MethodCall request = (MethodCall) object;
         List<Object> params = request.getParams();
 
-        assertTrue( params.size() == 1 );
+        assertEquals( 1, params.size() );
 
         Object param = params.get( 0 );
         assertTrue( param instanceof Map );
 
-        Map<String, Object> struct = (Map) param;
-        assertTrue( "test".equals( struct.get( "key" ) ) );
+        Map<String, Object> struct = (Map<String, Object>) param;
+        assertEquals( "test", struct.get( "key" ) );
 
         String methodName = request.getMethodName();
-        assertTrue( "foo".equals( methodName ) );
+        assertEquals( "foo", methodName );
     }
 
     @Test
-    public void requestWithOneArrayParamTest() throws IOException, XMLStreamException, XmlRpcException
+    public void requestWithOneArrayParamTest() throws XMLStreamException, XmlRpcException
     {
         final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithOneArrayParam" ) );
         Object object = parser.parse();
@@ -98,20 +97,20 @@ public class XmlRpcParserTest
         MethodCall request = (MethodCall) object;
         List<Object> params = request.getParams();
 
-        assertTrue( params.size() == 1 );
+        assertEquals( 1, params.size() );
 
         Object param = params.get( 0 );
         assertTrue( param instanceof List );
 
-        List<Object> array = (List) param;
-        assertTrue( "test".equals( array.get( 0 ) ) );
+        List<Object> array = (List<Object>) param;
+        assertEquals( "test", array.get( 0 ) );
 
         String methodName = request.getMethodName();
-        assertTrue( "foo".equals( methodName ) );
+        assertEquals( "foo", methodName );
     }
 
     @Test
-    public void requestWithArrayInStructTest() throws IOException, XMLStreamException, XmlRpcException
+    public void requestWithArrayInStructTest() throws XMLStreamException, XmlRpcException
     {
         final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithArrayInStruct" ) );
         Object object = parser.parse();
@@ -119,22 +118,22 @@ public class XmlRpcParserTest
         MethodCall request = (MethodCall) object;
         List<Object> params = request.getParams();
 
-        assertTrue( params.size() == 1 );
+        assertEquals( 1, params.size() );
 
         Object param = params.get( 0 );
         assertTrue( param instanceof Map );
 
-        Map<String, Object> struct = (Map) param;
+        Map<String, Object> struct = (Map<String, Object>) param;
 
-        List<Object> array = (List) struct.get( "key" );
-        assertTrue( "test".equals( array.get( 0 ) ) );
+        List<Object> array = (List<Object>) struct.get( "key" );
+        assertEquals( "test", array.get( 0 ) );
 
         String methodName = request.getMethodName();
-        assertTrue( "foo".equals( methodName ) );
+        assertEquals( "foo", methodName );
     }
 
     @Test
-    public void kojiMulticallRequestTest() throws IOException, XMLStreamException, XmlRpcException
+    public void kojiMulticallRequestTest() throws XMLStreamException, XmlRpcException
     {
         final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "kojiMulticallRequest" ) );
         Object object = parser.parse();
@@ -144,24 +143,24 @@ public class XmlRpcParserTest
         MethodCall request = (MethodCall) object;
         List<Object> params = request.getParams();
 
-        assertTrue( params.size() == 1 );
+        assertEquals( 1, params.size() );
 
-        List<Object> array = (List) params.get( 0 );
+        List<Object> array = (List<Object>) params.get( 0 );
 
-        Map<String, Object> value1 = (Map) array.get( 0 );
+        Map<String, Object> value1 = (Map<String, Object>) array.get( 0 );
         assertEquals( "getBuild", value1.get( "methodName" ) );
-        assertEquals( nvr, ( (List) value1.get( "params" ) ).get( 0 ) );
+        assertEquals( nvr, ( (List<Object>) value1.get( "params" ) ).get( 0 ) );
 
-        Map<String, Object> value2 = (Map) array.get( 1 );
+        Map<String, Object> value2 = (Map<String, Object>) array.get( 1 );
         assertEquals( "listTags", value2.get( "methodName" ) );
-        assertEquals( nvr, ( (List) value2.get( "params" ) ).get( 0 ) );
+        assertEquals( nvr, ( (List<Object>) value2.get( "params" ) ).get( 0 ) );
 
         String methodName = request.getMethodName();
-        assertTrue( "multiCall".equals( methodName ) );
+        assertEquals( "multiCall", methodName );
     }
 
     @Test
-    public void simpleResponseTest() throws IOException, XMLStreamException, XmlRpcException
+    public void simpleResponseTest() throws XMLStreamException, XmlRpcException
     {
         final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "simpleResponse" ) );
         Object object = parser.parse();
@@ -171,15 +170,15 @@ public class XmlRpcParserTest
         MethodResponse response = (MethodResponse) object;
         List<Object> params = response.getParams();
 
-        assertTrue( params.size() == 1 );
+        assertEquals( 1, params.size() );
 
         Object p = params.get( 0 );
         assertTrue( p instanceof Double );
-        assertTrue( ( (Double) p ).doubleValue() == 18.24668429131D );
+        assertEquals( 18.24668429131D, p );
     }
 
     @Test
-    public void simpleFaultResponseTest() throws IOException, XMLStreamException, XmlRpcException
+    public void simpleFaultResponseTest() throws XMLStreamException, XmlRpcException
     {
         final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "simpleFault" ) );
         Object object = parser.parse();
@@ -195,15 +194,15 @@ public class XmlRpcParserTest
 
         Object p = m.get( "faultCode" );
         assertTrue( p instanceof Integer );
-        assertTrue( ( (Integer) p ).intValue() == 101 );
+        assertEquals( 101, ( (Integer) p ).intValue() );
 
         p = m.get( "faultString" );
         assertTrue( p instanceof String );
-        assertTrue( "foo".equals( p ) );
+        assertEquals("foo", p);
     }
 
     @Test
-    public void jiraServerInfoTest() throws IOException, XMLStreamException, XmlRpcException, ParseException
+    public void jiraServerInfoTest() throws XMLStreamException, XmlRpcException
     {
         final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "jiraServerInfoResponse" ) );
         Object object = parser.parse();
@@ -215,14 +214,14 @@ public class XmlRpcParserTest
 
         Map<String, Object> struct = (Map<String, Object>) p;
 
-        assertTrue( struct.get( "version" ).equals( "4.1.2" ) );
-        assertTrue( struct.get( "edition" ).equals( "Enterprise" ) );
-        assertTrue( struct.get( "buildNumber" ).equals( 531 ) );
-        assertTrue( struct.get( "buildDate" ).equals( "Mon Jun 07 00:00:00 CDT 2010" ) );
+        assertEquals( "4.1.2", struct.get( "version" ) );
+        assertEquals( "Enterprise", struct.get( "edition" ) );
+        assertEquals( 531, struct.get( "buildNumber" ) );
+        assertEquals( "Mon Jun 07 00:00:00 CDT 2010", struct.get( "buildDate" ) );
     }
 
     @Test
-    public void kojiGetBuildResponseTest() throws IOException, XMLStreamException, XmlRpcException, ParseException
+    public void kojiGetBuildResponseTest() throws XMLStreamException, XmlRpcException
     {
         final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "kojiGetBuildResponse" ) );
         Object object = parser.parse();
@@ -234,15 +233,15 @@ public class XmlRpcParserTest
 
         Map<String, Object> struct = (Map<String, Object>) p;
 
-        assertTrue( struct.get( "package_name" ).equals( "org.dashbuilder-dashbuilder-parent-metadata" ) );
-        assertTrue( struct.get( "extra" ) == Nil.NIL_VALUE );
-        assertTrue( struct.get( "creation_time" ).equals( "2016-09-15 21:24:04.843726" ) );
-        assertTrue( struct.get( "package_id" ).equals( 48475 ) );
-        assertTrue( struct.get( "completion_ts" ).equals( Double.parseDouble( "1473974644.95959" ) ) );
+        assertEquals( "org.dashbuilder-dashbuilder-parent-metadata", struct.get( "package_name" ) );
+        assertSame( Nil.NIL_VALUE, struct.get( "extra" ) );
+        assertEquals( "2016-09-15 21:24:04.843726", struct.get( "creation_time" ) );
+        assertEquals( 48475, struct.get( "package_id" ) );
+        assertEquals( struct.get( "completion_ts" ), Double.parseDouble( "1473974644.95959" ) );
     }
 
     @Test
-    public void kojiMulticallResponseTest() throws IOException, XMLStreamException, XmlRpcException, ParseException
+    public void kojiMulticallResponseTest() throws XMLStreamException, XmlRpcException
     {
         final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "kojiMulticallResponse" ) );
         Object object = parser.parse();
@@ -252,31 +251,31 @@ public class XmlRpcParserTest
         Object p = response.getParams().get( 0 );
         assertTrue( p instanceof List );
 
-        List<Object> array = (List) p;
+        List<Object> array = (List<Object>) p;
 
-        List<Object> array1 = (List) array.get( 0 );
-        Map<String, Object> struct = (Map) array1.get( 0 );
+        List<Object> array1 = (List<Object>) array.get( 0 );
+        Map<String, Object> struct = (Map<String, Object>) array1.get( 0 );
         assertEquals( "org.dashbuilder-dashbuilder-parent-metadata", struct.get( "package_name" ) );
         assertEquals( Nil.NIL_VALUE, struct.get( "extra" ) );
         assertEquals( 48475, struct.get( "package_id" ) );
         assertEquals( "0.4.0.Final", struct.get( "version" ) );
 
-        List<Object> array2 = (List) array.get( 1 );
-        List<Object> array2_1 = (List) array2.get( 0 );
+        List<Object> array2 = (List<Object>) array.get( 1 );
+        List<Object> array21 = (List<Object>) array2.get( 0 );
 
-        Map<String, Object> tag1 = (Map) array2_1.get( 0 );
+        Map<String, Object> tag1 = (Map<String, Object>) array21.get( 0 );
         assertEquals( true, tag1.get( "maven_support" ) );
         assertEquals( "jb-bxms-6.3-candidate", tag1.get( "name" ) );
 
-        Map<String, Object> tag2 = (Map) array2_1.get( 1 );
+        Map<String, Object> tag2 = (Map<String, Object>) array21.get( 1 );
         assertEquals( true, tag2.get( "maven_support" ) );
         assertEquals( "jb-cs-maven-candidate", tag2.get( "name" ) );
 
-        Map<String, Object> tag3 = (Map) array2_1.get( 2 );
+        Map<String, Object> tag3 = (Map<String, Object>) array21.get( 2 );
         assertEquals( true, tag3.get( "maven_support" ) );
         assertEquals( "jb-fis-2.0-maven-imports", tag3.get( "name" ) );
 
-        Map<String, Object> tag4 = (Map) array2_1.get( 3 );
+        Map<String, Object> tag4 = (Map<String, Object>) array21.get( 3 );
         assertEquals( true, tag4.get( "maven_support" ) );
         assertEquals( "jb-mm-7.0-maven-candidate", tag4.get( "name" ) );
     }
@@ -294,6 +293,6 @@ public class XmlRpcParserTest
 
         Map<String, Object> struct = (Map<String, Object>) p;
 
-        assertTrue( struct.get( "rpm" ) == Nil.NIL_VALUE );
+        assertSame( Nil.NIL_VALUE, struct.get( "rpm" ) );
     }
 }

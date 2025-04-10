@@ -17,7 +17,6 @@ package org.commonjava.rwx.test.koji;
 
 import org.commonjava.rwx.api.RWXMapper;
 import org.commonjava.rwx.core.Registry;
-import org.commonjava.rwx.error.XmlRpcException;
 import org.commonjava.rwx.test.AbstractTest;
 import org.junit.Test;
 
@@ -51,7 +50,7 @@ public class KojiMultiCallTest
 
         Object renderedKojiNVR = Registry.getInstance().renderTo( kojiNVR );
 
-        List params = new ArrayList<>(  );
+        List<Object> params = new ArrayList<>(  );
         params.add( renderedKojiNVR );
         multiCallObj.setParams( params );
 
@@ -69,7 +68,7 @@ public class KojiMultiCallTest
         List<MultiCallObj> multiObjs = new ArrayList<>(  );
 
         MultiCallObj callObj_1 = new MultiCallObj( "getBuild" );
-        List params = new ArrayList<>(  );
+        List<Object> params = new ArrayList<>(  );
         params.add( "org.dashbuilder-dashbuilder-parent-metadata-0.4.0.Final-1" );
         callObj_1.setParams( params );
         multiObjs.add( callObj_1 );
@@ -143,7 +142,7 @@ public class KojiMultiCallTest
         assertMultiCallResponse( rounded );
     }
 
-    private void assertMultiCallResponse( MultiCallResponse response ) throws XmlRpcException
+    private void assertMultiCallResponse( MultiCallResponse response )
     {
         List<MultiCallValueObj> valueObjs = response.getValueObjs();
 
@@ -167,7 +166,7 @@ public class KojiMultiCallTest
         assertEquals( "org.dashbuilder-dashbuilder-parent-metadata", kojiBuildInfo.getPackageName() );
 
         // if we do not know the type, access Map directly
-        Map<String, Object> data1Map = (Map) data1;
+        Map<String, Object> data1Map = (Map<String, Object>) data1;
         assertEquals( 48475, data1Map.get( "package_id" ) );
         assertEquals( 513598, data1Map.get( "build_id" ) );
         assertEquals( "org.dashbuilder-dashbuilder-parent-metadata", data1Map.get( "package_name" ) );
@@ -175,7 +174,7 @@ public class KojiMultiCallTest
 
         // b. verify response from listTags call
 
-        List<Object> data2List = (List) data2;
+        List<Object> data2List = (List<Object>) data2;
         assertEquals( 4, data2List.size() );
 
         // if we know the type (KojiTagInfo) in the list, parse the element to it
@@ -186,7 +185,7 @@ public class KojiMultiCallTest
         // if we do not know the type, access List directly
         Object data2_1 = data2List.get( 0 );
         assertTrue( data2_1 instanceof Map );
-        Map<String, Object> data2_1Map = (Map) data2_1;
+        Map<String, Object> data2_1Map = (Map<String, Object>) data2_1;
         assertEquals( "jb-bxms-6.3-candidate", data2_1Map.get( "name" ) );
         assertEquals( 8829, data2_1Map.get( "id" ) );
     }

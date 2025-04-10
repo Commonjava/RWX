@@ -17,6 +17,10 @@ package org.commonjava.rwx.vocab;
 
 public class XmlRpcConstants
 {
+    private XmlRpcConstants()
+    {
+        throw new UnsupportedOperationException( "This is a utility class and cannot be instantiated" );
+    }
 
     public static final String REQUEST = "methodCall";
 
@@ -44,6 +48,5 @@ public class XmlRpcConstants
 
     public static final String NIL = "nil";
 
-    public static final String[] DATETIME_FORMAT = { "yyyyMMdd'T'HHmmss", "yyyyMMdd'T'HH:mm:ss" };
-
+    protected static final String[] DATETIME_FORMAT = { "yyyyMMdd'T'HHmmss", "yyyyMMdd'T'HH:mm:ss" };
 }

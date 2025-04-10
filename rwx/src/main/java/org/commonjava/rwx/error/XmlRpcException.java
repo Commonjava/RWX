@@ -50,7 +50,7 @@ public class XmlRpcException
             {
                 try
                 {
-                    formatted = String.format( formatted.replaceAll( "\\{\\}", "%s" ), params );
+                    formatted = String.format( formatted.replace( "{}", "%s" ), params );
                 }
                 catch ( final IllegalFormatException ife )
                 {

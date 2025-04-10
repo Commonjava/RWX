@@ -23,6 +23,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -65,7 +66,7 @@ public enum ValueType
     NIL( new ValueCoercion( "NIL-to-null" )
     {
         @Override
-        public Object fromString( final String value ) throws CoercionException
+        public Object fromString( final String value )
         {
             return Nil.NIL_VALUE;
         }
@@ -80,7 +81,7 @@ public enum ValueType
             try
             {
                 String val = value == null ? null : value.trim();
-                return val == null || val.length() < 1 ? null : Integer.parseInt( val );
+                return val == null || val.isEmpty() ? null : Integer.parseInt( val );
             }
             catch ( final NumberFormatException e )
             {
@@ -97,7 +98,7 @@ public enum ValueType
             try
             {
                 String val = value == null ? null : value.trim();
-                return val == null || val.length() < 1 ? null : Long.parseLong( val );
+                return val == null || val.isEmpty() ? null : Long.parseLong( val );
             }
             catch ( final NumberFormatException e )
             {
@@ -141,7 +142,7 @@ public enum ValueType
                 }
                 else
                 {
-                    return Boolean.valueOf( s ) ? "1" : "0";
+                    return Boolean.parseBoolean( s ) ? "1" : "0";
                 }
             }
         }
@@ -156,7 +157,7 @@ public enum ValueType
             else
             {
                 String val = value.trim();
-                return "1".equals( val ) || Boolean.valueOf( val );
+                return "1".equals( val ) || Boolean.parseBoolean( val );
             }
         }
     }, Boolean.class, "boolean" ),
@@ -166,7 +167,7 @@ public enum ValueType
         @Override
         public Object fromString( final String value )
         {
-            return value == null ? null : value;
+            return value;
         }
     }, String.class, "string" ),
 
@@ -178,7 +179,7 @@ public enum ValueType
             try
             {
                 String val = value == null ? null : value.trim();
-                return val == null || val.length() < 1 ? null : Double.parseDouble( val );
+                return val == null || val.isEmpty() ? null : Double.parseDouble( val );
             }
             catch ( final NumberFormatException e )
             {
@@ -200,7 +201,7 @@ public enum ValueType
         }
     }, Number.class, "double" ),
 
-    DATETIME( new ValueCoercion( "DATETIME-to-String (" + DATETIME_FORMAT + ")" )
+    DATETIME( new ValueCoercion( "DATETIME-to-String (" + Arrays.toString( DATETIME_FORMAT ) + ")" )
     {
         @Override
         public Object fromString( String value ) throws CoercionException
@@ -260,7 +261,7 @@ public enum ValueType
             }
 
             final byte[] result = Base64.decodeBase64( value.trim() );
-            if ( result.length < 1 && value.length() > 0 && !value.equals( "==" ) && !value.equals( "=" ) )
+            if ( result.length < 1 && !value.isEmpty() && !value.equals( "==" ) && !value.equals( "=" ) )
             {
                 throw new CoercionException( "Invalid Base64 input: " + value );
             }
@@ -273,11 +274,14 @@ public enum ValueType
         {
             try
             {
-                return value == null ?
-                                null :
-                                new String( Base64.encodeBase64( value instanceof String ?
-                                                                                 ( (String) value ).getBytes() :
-                                                                                 (byte[]) value ) );
+                if ( value == null )
+                {
+                    return null;
+                }
+
+                return new String( Base64.encodeBase64( value instanceof String ?
+                        ( (String) value ).getBytes() :
+                        ( byte[]) value ) );
             }
             catch ( final ClassCastException e )
             {
@@ -287,11 +291,11 @@ public enum ValueType
 
     }, byte[].class, "base64" ),;
 
-    private String[] tags;
+    private final String[] tags;
 
-    private Class<?> nativeType;
+    private final Class<?> nativeType;
 
-    private ValueCoercion coercion;
+    private final ValueCoercion coercion;
 
     ValueType( final ValueCoercion coercion, final Class<?> nativeType, final String... tags )
     {
@@ -316,7 +320,7 @@ public enum ValueType
         return type == null ? STRING : type;
     }
 
-    public static ValueType typeFor( final Class clazz )
+    public static ValueType typeFor( final Class<?> clazz )
     {
         ValueType result = null;
         for ( final ValueType vt : values() )
@@ -356,7 +360,7 @@ public enum ValueType
 
     public static ValueType typeOf( final String tag )
     {
-        if ( tag == null || tag.trim().length() < 1 )
+        if ( tag == null || tag.trim().isEmpty() )
         {
             return STRING;
         }
@@ -375,6 +379,7 @@ public enum ValueType
         return STRING;
     }
 
+    @Override
     public String toString()
     {
         return name();

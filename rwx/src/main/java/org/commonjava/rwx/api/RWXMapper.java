@@ -17,9 +17,7 @@ package org.commonjava.rwx.api;
 
 import org.commonjava.rwx.error.XmlRpcException;
 import org.commonjava.rwx.error.XmlRpcFaultException;
-import org.commonjava.rwx.core.Parser;
 import org.commonjava.rwx.core.Registry;
-import org.commonjava.rwx.core.Renderer;
 import org.commonjava.rwx.core.XmlRpcParser;
 import org.commonjava.rwx.model.Fault;
 import org.commonjava.rwx.model.RpcObject;
@@ -37,9 +35,9 @@ public final class RWXMapper
     /**
      * Render an object to XML-RPC request or response string.
      *
-     * @param obj
-     * @return
-     * @throws XmlRpcException
+     * @param obj the object to be rendered
+     * @return the XML string
+     * @throws XmlRpcException if the object cannot be rendered
      */
     public String render( Object obj ) throws XmlRpcException
     {
@@ -48,18 +46,18 @@ public final class RWXMapper
     }
 
     /**
-     * Parse a XML-RPC request or response stream (XML string) to an object.
+     * Parse ab XML-RPC request or response stream (XML string) to an object.
      *
-     * @param stream
-     * @param type
-     * @param <T>
-     * @return
-     * @throws XmlRpcException
+     * @param stream the input stream consisting of XML-RPC request or response
+     * @param type the class of the object to be parsed
+     * @param <T> the type of the object to be parsed
+     * @return  the object parsed from the XML-RPC stream
+     * @throws XmlRpcException if the stream cannot be parsed
      */
     public <T> T parse( InputStream stream, Class<T> type ) throws XmlRpcException
     {
         final XmlRpcParser xmlRpcParser = new XmlRpcParser( stream );
-        RpcObject rpcObject = null;
+        RpcObject rpcObject;
         try
         {
             rpcObject = xmlRpcParser.parse();

@@ -20,7 +20,6 @@ import org.commonjava.rwx.test.AbstractTest;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
-import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 

@@ -29,7 +29,7 @@ public class JiraServerInfoConverter implements Converter<AbstractJiraServerInfo
     @Override
     public AbstractJiraServerInfo parse( Object object )
     {
-        Map<String, Object> map = (Map) object;
+        Map<String, Object> map = (Map<String, Object>) object;
         String version = (String) map.get( "version" );
         String baseUrl = (String) map.get( "baseUrl" );
         String buildDate = (String) map.get( "buildDate" );
@@ -37,9 +37,9 @@ public class JiraServerInfoConverter implements Converter<AbstractJiraServerInfo
         String serverTime = (String) map.get( "serverTime" );
         int buildNumber = (Integer) map.get( "buildNumber" );
 
-        JiraServerInfo ret = new JiraServerInfo(version, baseUrl, buildDate, buildNumber);
-        ret.setEdition(edition);
-        ret.setServerTime(serverTime);
+        JiraServerInfo ret = new JiraServerInfo( version, baseUrl, buildDate, buildNumber );
+        ret.setEdition( edition );
+        ret.setServerTime( serverTime );
         return ret;
     }
 
