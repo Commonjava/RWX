@@ -31,6 +31,11 @@ import java.util.regex.Pattern;
  */
 public class ProcessorUtils
 {
+    private ProcessorUtils()
+    {
+        throw new UnsupportedOperationException( "This is a utility class and cannot be instantiated" );
+    }
+
     private static void debug( String message )
     {
         System.out.println( "ProcessorUtils >> " + message );
@@ -40,7 +45,7 @@ public class ProcessorUtils
 
     public static <E> Set<? extends E> union( Set<? extends E>... sets )
     {
-        Set<E> es = new HashSet<E>();
+        Set<E> es = new HashSet<>();
         for ( Set<? extends E> s : sets )
         {
             es.addAll( s );
@@ -73,12 +78,8 @@ public class ProcessorUtils
     public static String getMethodName( String prefix, Element e )
     {
         String fieldName = e.getSimpleName().toString();
-
-        Character upperCaseChar = Character.toUpperCase( fieldName.charAt( 0 ) );
-        StringBuilder sb = new StringBuilder( prefix );
-        sb.append( upperCaseChar );
-        sb.append( fieldName.substring( 1 ) );
-        return sb.toString();
+        char upperCaseChar = Character.toUpperCase( fieldName.charAt( 0 ) );
+        return prefix + upperCaseChar + fieldName.substring( 1 );
     }
 
     /**
@@ -88,13 +89,13 @@ public class ProcessorUtils
      * We then choose the common top level package 'org.apache.commons' and name the registry class accordingly as
      * org.apache.commons.generated.Commons_Registry
      * If we get more than one top packages, e.g., 'org.apache.commons' and 'com.yourcompany', we simply return 'generated._Registry'
-     * I am pretty sure there is better way to implement this. Let me know if you can make it with less code.
-     * @param packageNames
-     * @return
+     * I am pretty sure there is a better way to implement this. Let me know if you can make it with less code.
+     * @param packageNames the set of package names
+     * @return the registry class name
      */
     public static String getRegistryClassName( Set<String> packageNames )
     {
-        String commonPkgName = null;
+        String commonPkgName;
 
         if ( packageNames.size() == 1 )
         {
@@ -119,11 +120,7 @@ public class ProcessorUtils
                         }
                         else
                         {
-                            if ( cur.equals( c ) )
-                            {
-                                ; // do nothing
-                            }
-                            else
+                            if ( !cur.equals( c ) )
                             {
                                 stop = true;
                                 break;
@@ -152,7 +149,7 @@ public class ProcessorUtils
 
             if ( commonPkgName.endsWith( "." ) )
             {
-                commonPkgName = commonPkgName.substring( 0, commonPkgName.length() - 1);
+                commonPkgName = commonPkgName.substring( 0, commonPkgName.length() - 1 );
             }
             else
             {
@@ -160,17 +157,13 @@ public class ProcessorUtils
                 commonPkgName = commonPkgName.substring( 0, lastDot );
             }
         }
-        debug("Common package: " + commonPkgName);
+        debug( "Common package: " + commonPkgName );
 
         String[] split = getPackageAndClassName( commonPkgName );
         String lastName = split[1];
         Character upperCaseChar = Character.toUpperCase( lastName.charAt( 0 ) );
-        StringBuilder simpleName = new StringBuilder();
-        simpleName.append( upperCaseChar );
-        simpleName.append( lastName.substring( 1 ) );
-
-        String ret = commonPkgName + "." + GENERATED + "." + simpleName.toString() + "_Registry";
-        return ret;
+        String simpleName = upperCaseChar + lastName.substring( 1 );
+        return commonPkgName + "." + GENERATED + "." + simpleName + "_Registry";
     }
 
     public static String getParserClassName( String type )
@@ -193,7 +186,7 @@ public class ProcessorUtils
     {
         Pattern pattern = Pattern.compile( ".*List<(.+)>" );
         Matcher matcher = pattern.matcher( type );
-        while ( matcher.find() )
+        if ( matcher.find() )
         {
             return matcher.group( 1 ).trim();
         }

@@ -23,25 +23,26 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Registry
 {
-    protected Map<Class, Parser> parserMap = new ConcurrentHashMap<>();
-    protected Map<Class, Renderer> rendererMap = new ConcurrentHashMap<>();
+    protected Map<Class<?>, Parser<?>> parserMap = new ConcurrentHashMap<>();
 
-    protected void setParser(Class cls, Parser parser)
+    protected Map<Class<?>, Renderer<?>> rendererMap = new ConcurrentHashMap<>();
+
+    protected void setParser( Class<?> cls, Parser<?> parser )
     {
         parserMap.put( cls, parser );
     }
 
-    protected void setRenderer(Class cls, Renderer renderer)
+    protected void setRenderer( Class<?> cls, Renderer<?> renderer )
     {
         rendererMap.put( cls, renderer );
     }
 
     public <T> T parseAs( Object o, Class<T> type )
     {
-        Parser parser = parserMap.get( type );
+        Parser<?> parser = parserMap.get( type );
         if ( parser == null )
         {
-            throw new RuntimeException( "Parser not found for " + type.getName() );
+            throw new IllegalArgumentException( "Parser not found for " + type.getName() );
         }
         return type.cast( parser.parse( o ) );
     }
@@ -51,17 +52,17 @@ public class Registry
         Renderer renderer = rendererMap.get( obj.getClass() );
         if ( renderer == null )
         {
-            throw new RuntimeException( "Renderer not found for " + obj.getClass() );
+            throw new IllegalArgumentException( "Renderer not found for " + obj.getClass() );
         }
         return renderer.render( obj );
     }
 
-    public boolean hasRenderer( Class type )
+    public boolean hasRenderer( Class<?> type )
     {
         return rendererMap.get( type ) != null;
     }
 
-    public boolean hasParser( Class type )
+    public boolean hasParser( Class<?> type )
     {
         return parserMap.get( type ) != null;
     }
@@ -70,11 +71,13 @@ public class Registry
 
     private static Registry instance = new Registry(); // default
 
-    public static synchronized Registry getInstance() {
+    public static synchronized Registry getInstance()
+    {
         return instance;
     }
 
-    public static synchronized void setInstance( Registry registry ) {
+    public static synchronized void setInstance( Registry registry )
+    {
         instance = registry;
     }
 }

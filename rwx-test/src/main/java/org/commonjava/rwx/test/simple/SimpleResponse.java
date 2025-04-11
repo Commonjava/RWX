@@ -34,7 +34,7 @@ public class SimpleResponse
         this.value = value;
     }
 
-    @DataIndex(0)
+    @DataIndex( 0 )
     private double value;
 
 }

@@ -19,7 +19,7 @@ package org.commonjava.rwx.model;
  * Each request contains a single XML document, whose root element is a methodCall element.
  * Each methodCall element contains a methodName element and a params element. The methodName element identifies
  * the name of the procedure to be called, while the params element contains a list of parameters and their values.
- *
+ * <p>
  * Created by ruhan on 7/13/17.
  */
 public final class MethodCall

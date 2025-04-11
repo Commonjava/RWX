@@ -24,7 +24,7 @@ import org.commonjava.rwx.anno.Response;
 @Response
 public class GetBuildDescriptionResponse
 {
-    @DataIndex(0)
+    @DataIndex( 0 )
     private BuildDescription value;
 
     public BuildDescription getValue()

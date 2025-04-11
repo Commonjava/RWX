@@ -20,6 +20,11 @@ package org.commonjava.rwx.test.subclass;
  */
 public class Constants
 {
+    private Constants()
+    {
+        throw new UnsupportedOperationException( "This is a utility class and cannot be instantiated" );
+    }
+
     public static final String NAME = "name";
 
     public static final String VERSION = "version";

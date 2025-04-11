@@ -24,14 +24,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 public class NilTest
 {
     @Test
     public void serializationTest() throws IOException, ClassNotFoundException
     {
-        Object result = null;
+        Object result;
 
         try ( ByteArrayOutputStream bout = new ByteArrayOutputStream(); ObjectOutputStream out = new ObjectOutputStream( bout ) )
         {
@@ -46,9 +46,6 @@ public class NilTest
         }
 
         assertEquals( Nil.NIL_VALUE, result );
-
-        assertEquals( result, Nil.NIL_VALUE );
-
-        assertTrue( Nil.NIL_VALUE == result );
+        assertSame( Nil.NIL_VALUE, result );
     }
 }

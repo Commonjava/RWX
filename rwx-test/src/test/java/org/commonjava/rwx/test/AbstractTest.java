@@ -20,7 +20,6 @@ import org.commonjava.rwx.core.Registry;
 import org.commonjava.rwx.test.generated.Test_Registry;
 import org.junit.BeforeClass;
 
-import javax.xml.stream.XMLStreamException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,25 +40,25 @@ public abstract class AbstractTest
         Registry.setInstance( new Test_Registry() );
     }
 
-    protected InputStream getXMLStream( final String name ) throws IOException, XMLStreamException
+    protected InputStream getXMLStream( final String name )
     {
         return Thread.currentThread().getContextClassLoader().getResourceAsStream( DOC_PATH + name + ".xml" );
     }
 
-    protected String getXMLString( final String name ) throws IOException, XMLStreamException
+    protected String getXMLString( final String name ) throws IOException
     {
         return IOUtils.toString( new InputStreamReader( getXMLStream( name ) ));
     }
 
     // Comparing XML string is a bad idea. But we need it in some cases, e.g., kojiListBuildsResponseNIL
 
-    protected String getXMLStringIgnoreFormat( final String name ) throws IOException, XMLStreamException
+    protected String getXMLStringIgnoreFormat( final String name ) throws IOException
     {
         final BufferedReader reader = new BufferedReader( new InputStreamReader( getXMLStream( name ) ) );
         final StringWriter writer = new StringWriter();
         final PrintWriter pWriter = new PrintWriter( writer );
 
-        String line = null;
+        String line;
         while ( ( line = reader.readLine() ) != null )
         {
             pWriter.print( line.trim() );

@@ -26,6 +26,11 @@ import java.util.Map;
  */
 public class ParseUtils
 {
+    private ParseUtils()
+    {
+        throw new UnsupportedOperationException( "This is a utility class and cannot be instantiated" );
+    }
+
     public static Object nullifyNil( Object object )
     {
         if ( isNil( object ) )
@@ -44,11 +49,11 @@ public class ParseUtils
      * Upgrade cast, e.g., Int to Long.
      *
      * @param clazz target type
-     * @param value object to be casted
-     * @return object of target type
+     * @param value object to be cast
+     * @return object of the target type
      * @throws ClassCastException If not castable, throw ClassCastException
      */
-    public static Object upgradeCast( Class clazz, Object value )
+    public static Object upgradeCast( Class<?> clazz, Object value )
     {
         ValueType type = ValueType.typeFor( wrap( clazz ) );
         return type.coercion().upgradeCast( value );
