@@ -80,8 +80,8 @@
   </dependencyManagement>
 
   <scm>
-    <connection>scm:git:https://github.com/Commonjava/RWX.git</connection>
-    <developerConnection>scm:git:git@github.com:Commonjava/RWX.git</developerConnection>
+    <connection>scm:git:https://github.com/Commonjava/RWX</connection>
+    <developerConnection>scm:git:https://github.com/Commonjava/RWX</developerConnection>
     <url>https://github.com/Commonjava/RWX</url>
     <tag>HEAD</tag>
   </scm>
