@@ -15,7 +15,7 @@
  */
 package org.commonjava.rwx.util;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.lang.model.element.Element;
 import java.util.ArrayList;
