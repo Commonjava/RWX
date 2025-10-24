@@ -27,6 +27,8 @@
 
     <artifactId>rwx</artifactId>
 
+    <name>RWX</name>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>

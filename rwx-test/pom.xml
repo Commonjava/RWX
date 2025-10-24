@@ -27,6 +27,8 @@
 
     <artifactId>rwx-test</artifactId>
 
+    <name>RWX::Tests</name>
+
     <dependencies>
         <dependency>
             <groupId>org.commonjava.rwx</groupId>
