@@ -28,7 +28,7 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.commonjava.rwx.vocab.XmlRpcConstants.*;
 
 /**
