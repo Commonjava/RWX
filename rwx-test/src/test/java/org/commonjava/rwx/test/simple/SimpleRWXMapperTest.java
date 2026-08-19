@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ import org.commonjava.rwx.api.RWXMapper;
 import org.commonjava.rwx.test.AbstractTest;
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -60,7 +61,7 @@ public class SimpleRWXMapperTest
         String expected = getXMLStringIgnoreFormat( "requestWithOneArrayParam" );
         assertEquals( expected, formalizeXMLString( request ) );
 
-        RequestWithOneArrayParam parsed = new RWXMapper().parse( new ByteArrayInputStream( request.getBytes() ),
+        RequestWithOneArrayParam parsed = new RWXMapper().parse( new ByteArrayInputStream( request.getBytes( StandardCharsets.UTF_8 ) ),
                                                                  RequestWithOneArrayParam.class );
         assertEquals( parsed.getArray().get( 0 ), array.get( 0 ) );
         assertEquals( parsed.getArray().get( 1 ), array.get( 1 ) );

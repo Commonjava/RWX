@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ import org.commonjava.rwx.api.RWXMapper;
 import org.commonjava.rwx.test.AbstractTest;
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.io.ByteArrayInputStream;
 
 import static junit.framework.TestCase.assertEquals;
@@ -53,7 +54,7 @@ public class I8MapperTest
         String rendered = new RWXMapper().render( response );
         //System.out.println( ">>> " + rendered );
 
-        I8Response parsed = new RWXMapper().parse( new ByteArrayInputStream( rendered.getBytes() ), I8Response.class );
+        I8Response parsed = new RWXMapper().parse( new ByteArrayInputStream( rendered.getBytes( StandardCharsets.UTF_8 ) ), I8Response.class );
         assertEquals( parsed.getIntValue(), response.getIntValue() );
         assertEquals( parsed.getLongValue(), response.getLongValue() );
         assertEquals( parsed.getLongPrimitive(), response.getLongPrimitive() );

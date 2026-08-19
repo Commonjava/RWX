@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.commonjava.rwx.error.CoercionException;
 import org.commonjava.rwx.util.ValueCoercion;
 
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -217,7 +218,7 @@ public enum ValueType
             {
                 try
                 {
-                    obj = new SimpleDateFormat( format ).parse( value );
+                    obj = new SimpleDateFormat( format, Locale.ENGLISH ).parse( value );
                     break;
                 }
                 catch ( final ParseException e )
@@ -240,7 +241,7 @@ public enum ValueType
         {
             try
             {
-                return value == null ? null : new SimpleDateFormat( DATETIME_FORMAT[0] ).format( (Date) value );
+                return value == null ? null : new SimpleDateFormat( DATETIME_FORMAT[0], Locale.ENGLISH ).format( (Date) value );
             }
             catch ( final ClassCastException e )
             {
@@ -280,8 +281,8 @@ public enum ValueType
                 }
 
                 return new String( Base64.encodeBase64( value instanceof String ?
-                        ( (String) value ).getBytes() :
-                        ( byte[]) value ) );
+                        ( (String) value ).getBytes( StandardCharsets.UTF_8 ) :
+                        ( byte[]) value ), StandardCharsets.US_ASCII );
             }
             catch ( final ClassCastException e )
             {
