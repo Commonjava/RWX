@@ -15,7 +15,6 @@
  */
 package org.commonjava.rwx.core;
 
-import org.apache.commons.lang3.StringUtils;
 import org.commonjava.rwx.error.CoercionException;
 import org.commonjava.rwx.error.XmlRpcException;
 import org.commonjava.rwx.vocab.ValueType;
@@ -152,7 +151,7 @@ public class XmlRpcParser implements AutoCloseable
                     if ( event == XMLStreamConstants.CHARACTERS )
                     {
                         String text = reader.getText();
-                        if ( StringUtils.isNotBlank( text ) )
+                        if ( text != null && !text.isBlank() )
                         {
                             ret.setMethodName( text.trim() );
                             logger.trace( "Read methodName: " + text );
@@ -323,7 +322,7 @@ public class XmlRpcParser implements AutoCloseable
             else if ( event == XMLStreamConstants.CHARACTERS ) // default string value, takes form of <value>str</value>
             {
                 String text = reader.getText();
-                if ( StringUtils.isNotBlank( text ) )
+                if ( text != null && !text.isBlank() )
                 {
                     ret = text.trim();
                     logger.trace( "Read value: " + text );

@@ -22,7 +22,6 @@ import org.junit.Test;
 import java.nio.charset.StandardCharsets;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
@@ -55,7 +54,7 @@ public class SimpleRWXMapperTest
     public void roundTrip_RequestWithOneArrayParamTest() throws Exception
     {
         RequestWithOneArrayParam requst = new RequestWithOneArrayParam();
-        List<String> array = Arrays.asList( "test1", "test2" );
+        List<String> array = List.of( "test1", "test2" );
         requst.setArray( array );
         String request = new RWXMapper().render( requst );
         String expected = getXMLStringIgnoreFormat( "requestWithOneArrayParam" );

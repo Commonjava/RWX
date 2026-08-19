@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +28,6 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.commonjava.rwx.vocab.XmlRpcConstants.*;
 
 /**
@@ -223,7 +222,7 @@ public class RenderUtils
 
         w.writeStartElement( type.getPrimaryTag() );
         String chars = type.coercion().toString( object );
-        if ( isNotBlank( chars ) )
+        if ( chars != null && !chars.isBlank() )
         {
             w.writeCharacters( chars );
         }

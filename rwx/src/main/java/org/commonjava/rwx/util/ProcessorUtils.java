@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 package org.commonjava.rwx.util;
-
-import org.apache.commons.lang3.StringUtils;
 
 import javax.lang.model.element.Element;
 import java.util.ArrayList;
@@ -99,7 +97,7 @@ public class ProcessorUtils
 
         if ( packageNames.size() == 1 )
         {
-            commonPkgName = packageNames.toArray( new String[0] )[0];
+            commonPkgName = packageNames.iterator().next();
         }
         else
         {
@@ -142,7 +140,7 @@ public class ProcessorUtils
             }
 
             commonPkgName = sb.toString();
-            if ( StringUtils.isBlank( commonPkgName ) )
+            if ( commonPkgName.isBlank() )
             {
                 return "generated._Registry"; // default
             }
