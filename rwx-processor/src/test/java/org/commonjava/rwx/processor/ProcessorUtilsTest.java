@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.commonjava.rwx.core.util;
+package org.commonjava.rwx.processor;
 
-import static org.commonjava.rwx.util.ProcessorUtils.getElementClassByType;
-import static org.commonjava.rwx.util.ProcessorUtils.getRegistryClassName;
+import static org.commonjava.rwx.processor.ProcessorUtils.getElementClassByType;
+import static org.commonjava.rwx.processor.ProcessorUtils.getRegistryClassName;
 import org.junit.Test;
 
 import java.util.HashSet;

@@ -25,7 +25,19 @@
         <version>2.6-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rwx</artifactId>
+    <artifactId>rwx-processor</artifactId>
 
-    <name>RWX</name>
+    <name>RWX::Processor</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.commonjava.rwx</groupId>
+            <artifactId>rwx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy-templates</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

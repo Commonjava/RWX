@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.commonjava.rwx.core;
+package org.commonjava.rwx.processor;
 
 import groovy.lang.Writable;
 import groovy.text.GStringTemplateEngine;
@@ -25,7 +25,6 @@ import org.commonjava.rwx.anno.DataKey;
 import org.commonjava.rwx.anno.Request;
 import org.commonjava.rwx.anno.Response;
 import org.commonjava.rwx.anno.StructPart;
-import org.commonjava.rwx.util.ProcessorUtils;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -40,24 +39,26 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 import javax.tools.FileObject;
-import javax.tools.StandardLocation;
 import java.io.IOException;
+import java.net.URL;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
-import static org.commonjava.rwx.util.ProcessorUtils.GENERATED;
-import static org.commonjava.rwx.util.ProcessorUtils.getElementClassByType;
-import static org.commonjava.rwx.util.ProcessorUtils.getList;
-import static org.commonjava.rwx.util.ProcessorUtils.getMethodName;
-import static org.commonjava.rwx.util.ProcessorUtils.getPackageAndClassName;
-import static org.commonjava.rwx.util.ProcessorUtils.getRegistryClassName;
-import static org.commonjava.rwx.util.ProcessorUtils.union;
+import static org.commonjava.rwx.processor.ProcessorUtils.GENERATED;
+import static org.commonjava.rwx.processor.ProcessorUtils.getElementClassByType;
+import static org.commonjava.rwx.processor.ProcessorUtils.getList;
+import static org.commonjava.rwx.processor.ProcessorUtils.getMethodName;
+import static org.commonjava.rwx.processor.ProcessorUtils.getPackageAndClassName;
+import static org.commonjava.rwx.processor.ProcessorUtils.getRegistryClassName;
+import static org.commonjava.rwx.processor.ProcessorUtils.union;
 
 /**
  * Created by ruhan on 7/24/17.
@@ -127,8 +128,11 @@ public class AnnoProcessor
         List<String> imports = new ArrayList<>();
         List<String> simpleClassNames = new ArrayList<>();
 
+        List<Element> sortedClasses = new ArrayList<>( classes );
+        sortedClasses.sort( Comparator.comparing( e -> ( (TypeElement) e ).getQualifiedName().toString() ) );
+
         Set<String> packageNames = new HashSet<>();
-        for ( Element elem : classes )
+        for ( Element elem : sortedClasses )
         {
             String qName = ( (TypeElement) elem ).getQualifiedName().toString();
             imports.add( qName );
@@ -436,19 +440,15 @@ public class AnnoProcessor
 
     private Template getTemplate( String templateName )
     {
-        Template template;
         try
         {
-            final FileObject resource = processingEnv.getFiler()
-                                                     .getResource( StandardLocation.CLASS_PATH, TEMPLATE_PKG,
-                                                                   templateName );
-            template = engine.createTemplate( resource.toUri().toURL() );
+            final URL resource = AnnoProcessor.class.getResource( "/" + TEMPLATE_PKG + "/" + templateName );
+            return engine.createTemplate( Objects.requireNonNull( resource ) );
         }
         catch ( Exception e )
         {
             throw new IllegalStateException( "Cannot load template: " + TEMPLATE_PKG + "/" + templateName, e );
         }
-        return template;
     }
 
     private void generateOutput( Template template, Map<String, Object> templateParams, String className )
