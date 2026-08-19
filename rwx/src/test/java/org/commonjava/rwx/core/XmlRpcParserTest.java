@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,8 +40,11 @@ public class XmlRpcParserTest
     @Test
     public void simpleRequestTest() throws XMLStreamException, XmlRpcException
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "simpleRequest" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "simpleRequest" ) ) )
+        {
+            object = parser.parse();
+        }
 
         assertTrue( object instanceof MethodCall );
 
@@ -54,8 +57,11 @@ public class XmlRpcParserTest
     @Test
     public void requestWithOneParamTest() throws XMLStreamException, XmlRpcException
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithOneParam" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithOneParam" ) ) )
+        {
+            object = parser.parse();
+        }
 
         MethodCall request = (MethodCall) object;
         List<Object> params = request.getParams();
@@ -70,8 +76,11 @@ public class XmlRpcParserTest
     @Test
     public void requestWithOneStructParamTest() throws XMLStreamException, XmlRpcException
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithOneStructParam" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithOneStructParam" ) ) )
+        {
+            object = parser.parse();
+        }
 
         MethodCall request = (MethodCall) object;
         List<Object> params = request.getParams();
@@ -91,8 +100,11 @@ public class XmlRpcParserTest
     @Test
     public void requestWithOneArrayParamTest() throws XMLStreamException, XmlRpcException
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithOneArrayParam" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithOneArrayParam" ) ) )
+        {
+            object = parser.parse();
+        }
 
         MethodCall request = (MethodCall) object;
         List<Object> params = request.getParams();
@@ -112,8 +124,11 @@ public class XmlRpcParserTest
     @Test
     public void requestWithArrayInStructTest() throws XMLStreamException, XmlRpcException
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithArrayInStruct" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "requestWithArrayInStruct" ) ) )
+        {
+            object = parser.parse();
+        }
 
         MethodCall request = (MethodCall) object;
         List<Object> params = request.getParams();
@@ -135,8 +150,11 @@ public class XmlRpcParserTest
     @Test
     public void kojiMulticallRequestTest() throws XMLStreamException, XmlRpcException
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "kojiMulticallRequest" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "kojiMulticallRequest" ) ) )
+        {
+            object = parser.parse();
+        }
 
         String nvr = "org.dashbuilder-dashbuilder-parent-metadata-0.4.0.Final-1";
 
@@ -162,8 +180,11 @@ public class XmlRpcParserTest
     @Test
     public void simpleResponseTest() throws XMLStreamException, XmlRpcException
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "simpleResponse" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "simpleResponse" ) ) )
+        {
+            object = parser.parse();
+        }
 
         assertTrue( object instanceof MethodResponse );
 
@@ -180,8 +201,11 @@ public class XmlRpcParserTest
     @Test
     public void simpleFaultResponseTest() throws XMLStreamException, XmlRpcException
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "simpleFault" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "simpleFault" ) ) )
+        {
+            object = parser.parse();
+        }
 
         assertTrue( object instanceof Fault );
 
@@ -204,8 +228,11 @@ public class XmlRpcParserTest
     @Test
     public void jiraServerInfoTest() throws XMLStreamException, XmlRpcException
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "jiraServerInfoResponse" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "jiraServerInfoResponse" ) ) )
+        {
+            object = parser.parse();
+        }
 
         MethodResponse response = (MethodResponse) object;
 
@@ -223,8 +250,11 @@ public class XmlRpcParserTest
     @Test
     public void kojiGetBuildResponseTest() throws XMLStreamException, XmlRpcException
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "kojiGetBuildResponse" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "kojiGetBuildResponse" ) ) )
+        {
+            object = parser.parse();
+        }
 
         MethodResponse response = (MethodResponse) object;
 
@@ -243,8 +273,11 @@ public class XmlRpcParserTest
     @Test
     public void kojiMulticallResponseTest() throws XMLStreamException, XmlRpcException
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "kojiMulticallResponse" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "kojiMulticallResponse" ) ) )
+        {
+            object = parser.parse();
+        }
 
         MethodResponse response = (MethodResponse) object;
 
@@ -283,8 +316,11 @@ public class XmlRpcParserTest
     @Test
     public void kojiGetBuildTypeNilResponseTest() throws Exception
     {
-        final XmlRpcParser parser = new XmlRpcParser( getXMLStream( "kojiGetBuildTypeNilResponse" ) );
-        Object object = parser.parse();
+        final Object object;
+        try ( XmlRpcParser parser = new XmlRpcParser( getXMLStream( "kojiGetBuildTypeNilResponse" ) ) )
+        {
+            object = parser.parse();
+        }
 
         MethodResponse response = (MethodResponse) object;
 

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -46,7 +46,7 @@ import static org.commonjava.rwx.vocab.XmlRpcConstants.*;
  *
  * Created by ruhan on 7/13/17.
  */
-public class XmlRpcParser
+public class XmlRpcParser implements AutoCloseable
 {
     private final Logger logger = LoggerFactory.getLogger( getClass() );
 
@@ -65,6 +65,18 @@ public class XmlRpcParser
         {
             throw new XmlRpcException( "Failed to initialize stream reader: " + e.getMessage(), e );
         }
+    }
+
+    /**
+     * Frees any resources associated with this Reader. This method does not close the
+     * underlying input source.
+     *
+     * @throws XMLStreamException if there are errors freeing associated resources
+     */
+    @Override
+    public void close() throws XMLStreamException
+    {
+        reader.close();
     }
 
     /**
