@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -61,7 +61,14 @@ public class ParseUtils
 
     private static <T> Class<T> wrap( Class<T> c )
     {
-        return c.isPrimitive() ? (Class<T>) PRIMITIVES_TO_WRAPPERS.get( c ) : c;
+        if ( !c.isPrimitive() )
+        {
+            return c;
+        }
+
+        @SuppressWarnings( "unchecked" )
+        Class<T> wrapped = (Class<T>) PRIMITIVES_TO_WRAPPERS.get( c );
+        return wrapped;
     }
 
     private static final Map<Class<?>, Class<?>> PRIMITIVES_TO_WRAPPERS = new HashMap<>();

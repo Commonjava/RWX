@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@ public class JiraServerInfoConverter implements Converter<AbstractJiraServerInfo
     @Override
     public AbstractJiraServerInfo parse( Object object )
     {
-        Map<String, Object> map = (Map<String, Object>) object;
+        Map<?, ?> map = (Map<?, ?>) object;
         String version = (String) map.get( "version" );
         String baseUrl = (String) map.get( "baseUrl" );
         String buildDate = (String) map.get( "buildDate" );
