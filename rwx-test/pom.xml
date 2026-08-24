@@ -45,9 +45,15 @@
                     <generatedSourcesDirectory>${project.build.directory}/generated-sources</generatedSourcesDirectory>
                     <annotationProcessors>
                         <annotationProcessor>
-                            org.commonjava.rwx.core.AnnoProcessor
+                            org.commonjava.rwx.processor.AnnoProcessor
                         </annotationProcessor>
                     </annotationProcessors>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.commonjava.rwx</groupId>
+                            <artifactId>rwx-processor</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>

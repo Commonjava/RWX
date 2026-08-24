@@ -40,10 +40,14 @@
     <enforceBestPractices>false</enforceBestPractices>
     <plugin.jacoco.skip>false</plugin.jacoco.skip>
     <maven.compiler.release>${javaVersion}</maven.compiler.release>
+    <version.groovy-templates>5.1.0</version.groovy-templates>
+    <version.plugin.compiler>3.15.0</version.plugin.compiler>
+    <version.plugin.jacoco>0.8.15</version.plugin.jacoco>
   </properties>
 
   <modules>
     <module>rwx</module>
+    <module>rwx-processor</module>
     <module>rwx-test</module>
   </modules>
 
@@ -62,9 +66,14 @@
         <version>2.6-SNAPSHOT</version>
       </dependency>
       <dependency>
-        <groupId>org.codehaus.groovy</groupId>
+        <groupId>org.commonjava.rwx</groupId>
+        <artifactId>rwx-processor</artifactId>
+        <version>2.6-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.groovy</groupId>
         <artifactId>groovy-templates</artifactId>
-        <version>3.0.17</version>
+        <version>${version.groovy-templates}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -100,19 +109,19 @@
       <artifactId>hamcrest-core</artifactId>
     </dependency>
   </dependencies>
-  
+
   <build>
     <pluginManagement>
        <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>${version.plugin.javadoc}</version>
             <configuration>
               <detectOfflineLinks>false</detectOfflineLinks>
               <additionalOptions>-Xdoclint:none</additionalOptions>
               <additionalJOption>-Xdoclint:none</additionalJOption>
               <doclint>none</doclint>
-              <source>8</source>
+              <source>${javaVersion}</source>
               <links />
             </configuration>
           </plugin>

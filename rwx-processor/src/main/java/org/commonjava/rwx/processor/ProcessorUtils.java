@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.commonjava.rwx.util;
+package org.commonjava.rwx.processor;
 
 import javax.lang.model.element.Element;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,9 +42,10 @@ public class ProcessorUtils
 
     public static final String GENERATED = "generated";
 
+    @SafeVarargs
     public static <E> Set<? extends E> union( Set<? extends E>... sets )
     {
-        Set<E> es = new HashSet<>();
+        Set<E> es = new LinkedHashSet<>();
         for ( Set<? extends E> s : sets )
         {
             es.addAll( s );
