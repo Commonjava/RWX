@@ -61,11 +61,11 @@ public class RenderUtils
         }
         else if ( rpcObject instanceof Map<?, ?> )
         {
-            return toStructPartXMLString( (Map<String, Object>) rpcObject );
+            return toStructPartXMLString( (Map<?, ?>) rpcObject );
         }
         else if ( rpcObject instanceof List )
         {
-            return toArrayPartXMLString( (List<Object>) rpcObject );
+            return toArrayPartXMLString( (List<?>) rpcObject );
         }
         else
         {
@@ -73,7 +73,7 @@ public class RenderUtils
         }
     }
 
-    private static String toStructPartXMLString( Map<String, Object> rpcObject ) throws XmlRpcException
+    private static String toStructPartXMLString( Map<?, ?> rpcObject ) throws XmlRpcException
     {
         StringWriter result = new StringWriter();
         try
@@ -89,7 +89,7 @@ public class RenderUtils
         return result.toString();
     }
 
-    private static String toArrayPartXMLString( List<Object> rpcObject ) throws XmlRpcException
+    private static String toArrayPartXMLString( List<?> rpcObject ) throws XmlRpcException
     {
         StringWriter result = new StringWriter();
         try
@@ -173,11 +173,11 @@ public class RenderUtils
 
         if ( object instanceof List )
         {
-            writeArray( w, (List<Object>) object );
+            writeArray( w, (List<?>) object );
         }
         else if ( object instanceof Map<?, ?> )
         {
-            writeStruct( w, (Map<String, Object>) object );
+            writeStruct( w, (Map<?, ?>) object );
         }
         else
         {
@@ -187,7 +187,7 @@ public class RenderUtils
         w.writeEndElement();
     }
 
-    private static void writeArray( XMLStreamWriter w, List<Object> objects )
+    private static void writeArray( XMLStreamWriter w, List<?> objects )
                     throws XMLStreamException, CoercionException
     {
         w.writeStartElement( ARRAY );
@@ -200,15 +200,15 @@ public class RenderUtils
         w.writeEndElement();
     }
 
-    private static void writeStruct( XMLStreamWriter w, Map<String, Object> map )
+    private static void writeStruct( XMLStreamWriter w, Map<?, ?> map )
                     throws XMLStreamException, CoercionException
     {
         w.writeStartElement( STRUCT );
-        for ( Map.Entry<String, Object> entry : map.entrySet() )
+        for ( Map.Entry<?, ?> entry : map.entrySet() )
         {
             w.writeStartElement( MEMBER );
             w.writeStartElement( NAME );
-            w.writeCharacters( entry.getKey() );
+            w.writeCharacters( (String) entry.getKey() );
             w.writeEndElement();
             writeValue( w, entry.getValue() );
             w.writeEndElement();
