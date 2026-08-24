@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,6 @@
  */
 package org.commonjava.rwx.test;
 
-import org.apache.commons.io.IOUtils;
 import org.commonjava.rwx.core.Registry;
 import org.commonjava.rwx.test.generated.Test_Registry;
 import org.junit.BeforeClass;
@@ -24,8 +23,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 /**
  * Created by ruhan on 8/2/17.
@@ -47,30 +46,26 @@ public abstract class AbstractTest
 
     protected String getXMLString( final String name ) throws IOException
     {
-        return IOUtils.toString( new InputStreamReader( getXMLStream( name ) ));
+        try ( InputStream stream = getXMLStream( name ) )
+        {
+            return new String( stream.readAllBytes(), StandardCharsets.UTF_8 );
+        }
     }
 
     // Comparing XML string is a bad idea. But we need it in some cases, e.g., kojiListBuildsResponseNIL
 
     protected String getXMLStringIgnoreFormat( final String name ) throws IOException
     {
-        final BufferedReader reader = new BufferedReader( new InputStreamReader( getXMLStream( name ) ) );
-        final StringWriter writer = new StringWriter();
-        final PrintWriter pWriter = new PrintWriter( writer );
-
-        String line;
-        while ( ( line = reader.readLine() ) != null )
+        try ( BufferedReader reader = new BufferedReader(new InputStreamReader( getXMLStream( name ), StandardCharsets.UTF_8 ) ) )
         {
-            pWriter.print( line.trim() );
+            return reader.lines().map( String::trim ).collect( Collectors.joining() ).trim();
         }
-
-        return writer.toString().trim();
     }
 
     protected String formalizeXMLString( String xml )
     {
         xml = xml.replaceFirst( "<\\?.*\\?>", "<?xml version=\"1.0\"?>" );
-        xml = xml.replaceAll( "<nil/>", "<nil></nil>" );
+        xml = xml.replace( "<nil/>", "<nil></nil>" );
         return xml;
     }
 

@@ -36,10 +36,10 @@
 
   <properties>
     <projectOwner>Red Hat, Inc.</projectOwner>
-    <javaVersion>1.8</javaVersion>
     <enforceStandards>false</enforceStandards>
     <enforceBestPractices>false</enforceBestPractices>
     <plugin.jacoco.skip>false</plugin.jacoco.skip>
+    <maven.compiler.release>${javaVersion}</maven.compiler.release>
   </properties>
 
   <modules>
@@ -52,7 +52,7 @@
       <dependency>
         <groupId>org.commonjava.boms</groupId>
         <artifactId>web-commons-bom</artifactId>
-        <version>31</version>
+        <version>34</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -80,11 +80,6 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>log4j-over-slf4j</artifactId>
-      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>

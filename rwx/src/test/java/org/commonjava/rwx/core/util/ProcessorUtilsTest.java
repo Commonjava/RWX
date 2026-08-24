@@ -19,7 +19,6 @@ import static org.commonjava.rwx.util.ProcessorUtils.getElementClassByType;
 import static org.commonjava.rwx.util.ProcessorUtils.getRegistryClassName;
 import org.junit.Test;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +33,7 @@ public class ProcessorUtilsTest
     @Test
     public void getRegistryNameTest()
     {
-        String reg = getRegistryClassName( Collections.emptySet() );
+        String reg = getRegistryClassName( Set.of() );
         assertEquals( "generated._Registry", reg );
 
         Set<String> set = new HashSet<>(  );

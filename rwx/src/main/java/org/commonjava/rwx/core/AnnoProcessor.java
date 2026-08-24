@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,6 @@ package org.commonjava.rwx.core;
 import groovy.lang.Writable;
 import groovy.text.GStringTemplateEngine;
 import groovy.text.Template;
-import org.apache.commons.io.IOUtils;
 import org.commonjava.rwx.anno.ArrayPart;
 import org.commonjava.rwx.anno.Converter;
 import org.commonjava.rwx.anno.DataIndex;
@@ -456,11 +455,8 @@ public class AnnoProcessor
     {
         Filer filer = processingEnv.getFiler();
         Writable output = template.make( templateParams );
-        Writer sourceWriter = null;
-        try
+        try ( Writer sourceWriter = filer.createSourceFile( className ).openWriter() )
         {
-            FileObject file = filer.createSourceFile( className );
-            sourceWriter = file.openWriter();
             output.writeTo( sourceWriter );
         }
         catch ( final IOException e )
@@ -469,10 +465,6 @@ public class AnnoProcessor
                          .printMessage( Diagnostic.Kind.ERROR,
                                         "While generating sources for class: '" + className + "', error: "
                                                         + e.getMessage() );
-        }
-        finally
-        {
-            IOUtils.closeQuietly( sourceWriter );
         }
     }
 

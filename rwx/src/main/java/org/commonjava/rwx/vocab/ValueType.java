@@ -15,7 +15,6 @@
  */
 package org.commonjava.rwx.vocab;
 
-import org.apache.commons.codec.binary.Base64;
 import org.commonjava.rwx.error.CoercionException;
 import org.commonjava.rwx.util.ValueCoercion;
 
@@ -25,6 +24,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -261,7 +261,15 @@ public enum ValueType
                 return null;
             }
 
-            final byte[] result = Base64.decodeBase64( value.trim() );
+            byte[] result;
+            try
+            {
+                result = Base64.getMimeDecoder().decode( value.trim() );
+            }
+            catch ( final IllegalArgumentException e )
+            {
+                result = new byte[0];
+            }
             if ( result.length < 1 && !value.isEmpty() && !value.equals( "==" ) && !value.equals( "=" ) )
             {
                 throw new CoercionException( "Invalid Base64 input: " + value );
@@ -280,9 +288,9 @@ public enum ValueType
                     return null;
                 }
 
-                return new String( Base64.encodeBase64( value instanceof String ?
+                return Base64.getEncoder().encodeToString( value instanceof String ?
                         ( (String) value ).getBytes( StandardCharsets.UTF_8 ) :
-                        ( byte[]) value ), StandardCharsets.US_ASCII );
+                        ( byte[]) value );
             }
             catch ( final ClassCastException e )
             {
@@ -361,7 +369,7 @@ public enum ValueType
 
     public static ValueType typeOf( final String tag )
     {
-        if ( tag == null || tag.trim().isEmpty() )
+        if ( tag == null || tag.isBlank() )
         {
             return STRING;
         }
