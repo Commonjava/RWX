@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ import org.commonjava.rwx.api.RWXMapper;
 import org.commonjava.rwx.test.AbstractTest;
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.io.ByteArrayInputStream;
 
 import static junit.framework.TestCase.assertEquals;
@@ -33,14 +34,14 @@ public class JiraServerInfoConverterTest
     public void roundTrip_jiraServerInfoResponse() throws Exception
     {
         String source = getXMLString( "jiraServerInfoResponse" );
-        JiraServerInfoResponse response = new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ),
+        JiraServerInfoResponse response = new RWXMapper().parse( new ByteArrayInputStream( source.getBytes( StandardCharsets.UTF_8 ) ),
                                                                  JiraServerInfoResponse.class );
 
         assertJiraServerInfo( (JiraServerInfo) response.getValue() );
 
         String rendered = new RWXMapper().render( response );
         JiraServerInfoResponse renderedResponse =
-                        new RWXMapper().parse( new ByteArrayInputStream( rendered.getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( rendered.getBytes( StandardCharsets.UTF_8 ) ),
                                                JiraServerInfoResponse.class );
 
         assertJiraServerInfo( (JiraServerInfo) renderedResponse.getValue() );
@@ -51,14 +52,14 @@ public class JiraServerInfoConverterTest
     {
         String source = getXMLString( "jiraServerInfoResponse" );
         JiraServerInfoResponseVariantOne response =
-                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes( StandardCharsets.UTF_8 ) ),
                                                JiraServerInfoResponseVariantOne.class );
 
         assertJiraServerInfo( (JiraServerInfo) response.getValue() );
 
         String rendered = new RWXMapper().render( response );
         JiraServerInfoResponseVariantOne renderedResponse =
-                        new RWXMapper().parse( new ByteArrayInputStream( rendered.getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( rendered.getBytes( StandardCharsets.UTF_8 ) ),
                                                JiraServerInfoResponseVariantOne.class );
 
         assertJiraServerInfo( (JiraServerInfo) renderedResponse.getValue() );

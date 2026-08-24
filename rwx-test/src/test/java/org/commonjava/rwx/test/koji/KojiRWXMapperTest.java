@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ import org.commonjava.rwx.api.RWXMapper;
 import org.commonjava.rwx.test.AbstractTest;
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class KojiRWXMapperTest
     public void roundTrip_KrbLoginRequest() throws Exception
     {
         String source = getXMLString( "kojiKrbLoginRequest" );
-        KrbLoginRequest parsed = new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ),
+        KrbLoginRequest parsed = new RWXMapper().parse( new ByteArrayInputStream( source.getBytes( StandardCharsets.UTF_8 ) ),
                                                         KrbLoginRequest.class );
 
         KrbLoginRequest expected = new KrbLoginRequest();
@@ -47,7 +48,7 @@ public class KojiRWXMapperTest
         assertEquals( expected.getKrbRequest(), parsed.getKrbRequest() );
 
         KrbLoginRequest rounded =
-                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes( StandardCharsets.UTF_8 ) ),
                                                KrbLoginRequest.class );
         assertEquals( expected.getKrbRequest(), rounded.getKrbRequest() );
     }
@@ -56,7 +57,7 @@ public class KojiRWXMapperTest
     public void roundTrip_GetBuildByNVRObjRequest() throws Exception
     {
         String source = getXMLString( "kojiGetBuildByNVRObjRequest" );
-        GetBuildByNVRObjRequest parsed = new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ),
+        GetBuildByNVRObjRequest parsed = new RWXMapper().parse( new ByteArrayInputStream( source.getBytes( StandardCharsets.UTF_8 ) ),
                                                                 GetBuildByNVRObjRequest.class );
 
         GetBuildByNVRObjRequest expected = new GetBuildByNVRObjRequest(
@@ -65,7 +66,7 @@ public class KojiRWXMapperTest
         assertEquals( expected.getNvr().renderString(), parsed.getNvr().renderString() );
 
         GetBuildByNVRObjRequest rounded =
-                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes( StandardCharsets.UTF_8 ) ),
                                                GetBuildByNVRObjRequest.class );
         assertEquals( expected.getNvr().renderString(), rounded.getNvr().renderString() );
     }
@@ -75,14 +76,14 @@ public class KojiRWXMapperTest
     {
         String source = getXMLString( "kojiGetBuildRequest" );
         GetBuildRequest parsed =
-                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ), GetBuildRequest.class );
+                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes( StandardCharsets.UTF_8 ) ), GetBuildRequest.class );
 
         GetBuildRequest expected = new GetBuildRequest( "org.dashbuilder-dashbuilder-parent-metadata-0.4.0.Final-1" );
 
         assertEquals( expected.getNvr(), parsed.getNvr() );
 
         GetBuildRequest rounded =
-                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes( StandardCharsets.UTF_8 ) ),
                                                GetBuildRequest.class );
 
         assertEquals( expected.getNvr(), rounded.getNvr() );
@@ -94,12 +95,12 @@ public class KojiRWXMapperTest
         String source = getXMLString( "kojiGetBuildResponse" );
 
         GetBuildResponse parsed =
-                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ), GetBuildResponse.class );
+                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes( StandardCharsets.UTF_8 ) ), GetBuildResponse.class );
 
         assertGetBuildResponse( parsed );
 
         GetBuildResponse rounded =
-                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes( StandardCharsets.UTF_8 ) ),
                                                GetBuildResponse.class );
 
         assertGetBuildResponse( rounded );
@@ -122,7 +123,7 @@ public class KojiRWXMapperTest
     {
         String source = getXMLStringIgnoreFormat( "kojiListBuildsResponseNIL" );
         ListBuildResponse parsed =
-                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ), ListBuildResponse.class );
+                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes( StandardCharsets.UTF_8 ) ), ListBuildResponse.class );
 
         assertNull( parsed.getBuilds() );
 
@@ -136,12 +137,12 @@ public class KojiRWXMapperTest
     {
         String source = getXMLString( "kojiListTagsResponse" );
         ListTagsResponse parsed =
-                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ), ListTagsResponse.class );
+                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes( StandardCharsets.UTF_8 ) ), ListTagsResponse.class );
 
         assertListTagsResponse( parsed );
 
         ListTagsResponse rounded =
-                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes( StandardCharsets.UTF_8 ) ),
                                                ListTagsResponse.class );
 
         assertListTagsResponse( rounded );

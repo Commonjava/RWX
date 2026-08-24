@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ import org.commonjava.rwx.api.RWXMapper;
 import org.commonjava.rwx.test.AbstractTest;
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.io.ByteArrayInputStream;
 
 import static junit.framework.TestCase.assertEquals;
@@ -33,12 +34,12 @@ public class JiraServerInfoArrayConverterTest
     public void roundTrip() throws Exception
     {
         String source = getXMLString( "jiraServerInfoArrayResponse" );
-        JiraServerInfoArrayResponse response = new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ),
+        JiraServerInfoArrayResponse response = new RWXMapper().parse( new ByteArrayInputStream( source.getBytes( StandardCharsets.UTF_8 ) ),
                                                                  JiraServerInfoArrayResponse.class );
 
         String rendered = new RWXMapper().render( response );
         JiraServerInfoArrayResponse renderedResponse =
-                        new RWXMapper().parse( new ByteArrayInputStream( rendered.getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( rendered.getBytes( StandardCharsets.UTF_8 ) ),
                                                JiraServerInfoArrayResponse.class );
 
         assertJiraServerInfo( (JiraServerInfo) renderedResponse.getValues().get( 0 ) );

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010 Red Hat, Inc. (http://github.com/Commonjava/commonjava)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,7 @@ import org.commonjava.rwx.core.Registry;
 import org.commonjava.rwx.test.AbstractTest;
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class KojiMultiCallTest
         request.setMultiCallObjs( multiObjs );
 
         MultiCallRequest rounded =
-                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( request ).getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( request ).getBytes( StandardCharsets.UTF_8 ) ),
                                                MultiCallRequest.class );
 
         assertMultiCallRequest( rounded );
@@ -93,12 +94,12 @@ public class KojiMultiCallTest
     {
         String source = getXMLString( "kojiMulticallRequest" );
         MultiCallRequest parsed =
-                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ), MultiCallRequest.class );
+                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes( StandardCharsets.UTF_8 ) ), MultiCallRequest.class );
 
         assertMultiCallRequest( parsed );
 
         MultiCallRequest rounded =
-                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes( StandardCharsets.UTF_8 ) ),
                                                MultiCallRequest.class );
 
         assertMultiCallRequest( rounded );
@@ -131,12 +132,12 @@ public class KojiMultiCallTest
     {
         String source = getXMLString( "kojiMulticallResponse" );
         MultiCallResponse parsed =
-                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes() ), MultiCallResponse.class );
+                        new RWXMapper().parse( new ByteArrayInputStream( source.getBytes( StandardCharsets.UTF_8 ) ), MultiCallResponse.class );
 
         assertMultiCallResponse( parsed );
 
         MultiCallResponse rounded =
-                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes() ),
+                        new RWXMapper().parse( new ByteArrayInputStream( new RWXMapper().render( parsed ).getBytes( StandardCharsets.UTF_8 ) ),
                                                MultiCallResponse.class );
 
         assertMultiCallResponse( rounded );
