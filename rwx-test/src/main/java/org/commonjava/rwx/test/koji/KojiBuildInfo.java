@@ -102,11 +102,11 @@ public class KojiBuildInfo
 
     public KojiBuildInfo( int id, int packageId, String name, String version, String release )
     {
-        setId( id );
-        setPackageId( packageId );
-        setName( name );
-        setVersion( version );
-        setRelease( release );
+        this.id = id;
+        this.packageId = packageId;
+        this.name = name;
+        this.version = version;
+        this.release = release;
     }
 
     public int getBuildId()
