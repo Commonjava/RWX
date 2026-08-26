@@ -23,6 +23,7 @@ import org.commonjava.rwx.model.Fault;
 public class XmlRpcFaultException
                 extends XmlRpcException
 {
+    private static final long serialVersionUID = 1L;
 
     private Fault fault;
 
