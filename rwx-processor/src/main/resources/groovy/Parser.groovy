@@ -18,65 +18,47 @@ import java.util.Map;
 public class ${simpleClassName}_Parser implements Parser<${simpleClassName}>
 {
     @Override
+    @SuppressWarnings( "unchecked" )
     public ${simpleClassName} parse( Object object )
     {
         ${simpleClassName} ret = new ${simpleClassName}();
         Object val;
-
-        <% if (structPart == true) { %>
-        Map<String, Object> map = (Map) object;
-        <% params.each { %>
+<% if (structPart == true) { %>
+        Map<?, ?> map = (Map<?, ?>) object;
+<% params.each { %>
         val = map.get( "${it.key}" );
         if ( val != null )
-        {   
+        {
             val = nullifyNil( val );
-            <% if (it.converter != null) { %>
-            ret.${it.methodName}( new ${it.converter}().parse( val ) );
-            <% } else if (it.actionClass == null) { %>
-            <% if (it.isPrimitive) { %>if ( val != null ) <% } %>ret.${it.methodName}( (${it.type}) <% if (it.isUpgradeCast) { %>upgradeCast( ${it.type}.class, val )<% } else { %>val<% } %> );
-            <% } else { %>
-                <% if (it.contains) { %>
-            List<${it.elementClass}> ${it.localListVariableName} = new ArrayList<>();
-            for ( Object obj : ( List<Object> ) val )
+<% if (it.converter != null) { %>            ret.${it.methodName}( new ${it.converter}().parse( val ) );
+<% } else if (it.actionClass == null) { %>            <% if (it.isPrimitive) { %>if ( val != null ) <% } %>ret.${it.methodName}( <% if (it.type != 'java.lang.Object') { %>(${it.type}) <% } %><% if (it.isUpgradeCast) { %>upgradeCast( ${it.type}.class, val )<% } else { %>val<% } %> );
+<% } else if (it.contains) { %>            List<${it.elementClass}> ${it.localListVariableName} = new ArrayList<>();
+            for ( Object obj : (List<?>) val )
             {
                 ${it.localListVariableName}.add( new ${it.actionClass}().parse( obj ) );
             }
             ret.${it.methodName}( ${it.localListVariableName} );
-                <% } else { %>
-            ret.${it.methodName}( new ${it.actionClass}().parse( val ) );
-                <% } %>
-            <% } %>
-        }
-        <% } %>
-        <% } else { %>
-        <% if (arrayPart == true) { %>
-        List<Object> list = (List)object;
-        <% } else { %>
-        List<Object> list = ((RpcObject) object).getParams();
-        <% } %>
-        <% params.eachWithIndex { it, idx -> %>
+<% } else { %>            ret.${it.methodName}( new ${it.actionClass}().parse( val ) );
+<% } %>        }
+<% } %><% } else { %><% if (arrayPart == true) { %>
+        List<?> list = (List<?>) object;
+<% } else { %>
+        List<?> list = ((RpcObject) object).getParams();
+<% } %><% params.eachWithIndex { it, idx -> %>
         val = list.get( ${idx} );
         if ( val != null && !isNil( val ) )
         {
-            <% if (it.converter != null) { %>
-            ret.${it.methodName}( new ${it.converter}().parse( val ) );
-            <% } else if (it.actionClass == null) { %>
-            ret.${it.methodName}( (${it.type}) <% if (it.isUpgradeCast) { %>upgradeCast( ${it.type}.class, val )<% } else { %>val<% } %> );
-            <% } else { %>
-                <% if (it.contains) { %>
-            List<${it.elementClass}> ${it.localListVariableName} = new ArrayList<>();
-            for ( Object obj : ( List<Object> ) val )
+<% if (it.converter != null) { %>            ret.${it.methodName}( new ${it.converter}().parse( val ) );
+<% } else if (it.actionClass == null) { %>            ret.${it.methodName}( <% if (it.type != 'java.lang.Object') { %>(${it.type}) <% } %><% if (it.isUpgradeCast) { %>upgradeCast( ${it.type}.class, val )<% } else { %>val<% } %> );
+<% } else if (it.contains) { %>            List<${it.elementClass}> ${it.localListVariableName} = new ArrayList<>();
+            for ( Object obj : (List<?>) val )
             {
                 ${it.localListVariableName}.add( new ${it.actionClass}().parse( obj ) );
             }
             ret.${it.methodName}( ${it.localListVariableName} );
-                <% } else { %>
-            ret.${it.methodName}( new ${it.actionClass}().parse( val ) );
-                <% } %>
-            <% } %>
-        }
-        <% } %>
-        <% } %>
+<% } else { %>            ret.${it.methodName}( new ${it.actionClass}().parse( val ) );
+<% } %>        }
+<% } %><% } %>
         return ret;
     }
 }
