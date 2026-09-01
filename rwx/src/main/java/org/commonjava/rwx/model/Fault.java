@@ -15,6 +15,8 @@
  */
 package org.commonjava.rwx.model;
 
+import java.io.Serializable;
+
 /**
  * XML-RPC faults are a type of responses.
  * If there was a problem in processing an XML-RPC request, the methodResponse
@@ -23,8 +25,11 @@ package org.commonjava.rwx.model;
  * <p>
  * Created by ruhan on 7/13/17.
  */
-public final class Fault extends RpcObject
+public final class Fault extends RpcObject implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
+    @SuppressWarnings( "serial" )
     private Object value;
 
     public Object getValue()

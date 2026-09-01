@@ -58,6 +58,8 @@ public class Nil
     private static class Proxy
         implements Externalizable
     {
+        private static final long serialVersionUID = 1L;
+
         public Proxy()
         {
 
