@@ -37,7 +37,7 @@ public class NilTest
         {
             out.writeObject( Nil.NIL_VALUE );
 
-            out.close();
+            out.flush();
 
             try ( ByteArrayInputStream bin = new ByteArrayInputStream( bout.toByteArray() ); ObjectInputStream in = new ObjectInputStream( bin ) )
             {
