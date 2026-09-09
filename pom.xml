@@ -40,7 +40,7 @@
     <enforceBestPractices>false</enforceBestPractices>
     <plugin.jacoco.skip>false</plugin.jacoco.skip>
     <maven.compiler.release>${javaVersion}</maven.compiler.release>
-    <version.groovy-templates>5.1.0</version.groovy-templates>
+    <version.groovy-templates>5.1.1</version.groovy-templates>
     <version.plugin.compiler>3.15.0</version.plugin.compiler>
     <version.plugin.jacoco>0.8.15</version.plugin.jacoco>
   </properties>
