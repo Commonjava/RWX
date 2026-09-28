@@ -49,7 +49,8 @@ public class Registry
 
     public Object renderTo( Object obj )
     {
-        Renderer renderer = rendererMap.get( obj.getClass() );
+        @SuppressWarnings( "unchecked" )
+        Renderer<Object> renderer = (Renderer<Object>) rendererMap.get( obj.getClass() );
         if ( renderer == null )
         {
             throw new IllegalArgumentException( "Renderer not found for " + obj.getClass() );
