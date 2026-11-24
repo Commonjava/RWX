@@ -167,7 +167,7 @@ public class KojiMultiCallTest
         assertEquals( "org.dashbuilder-dashbuilder-parent-metadata", kojiBuildInfo.getPackageName() );
 
         // if we do not know the type, access Map directly
-        Map<String, Object> data1Map = (Map<String, Object>) data1;
+        Map<?, ?> data1Map = (Map<?, ?>) data1;
         assertEquals( 48475, data1Map.get( "package_id" ) );
         assertEquals( 513598, data1Map.get( "build_id" ) );
         assertEquals( "org.dashbuilder-dashbuilder-parent-metadata", data1Map.get( "package_name" ) );
@@ -175,7 +175,7 @@ public class KojiMultiCallTest
 
         // b. verify response from listTags call
 
-        List<Object> data2List = (List<Object>) data2;
+        List<?> data2List = (List<?>) data2;
         assertEquals( 4, data2List.size() );
 
         // if we know the type (KojiTagInfo) in the list, parse the element to it
@@ -186,7 +186,7 @@ public class KojiMultiCallTest
         // if we do not know the type, access List directly
         Object data2_1 = data2List.get( 0 );
         assertTrue( data2_1 instanceof Map );
-        Map<String, Object> data2_1Map = (Map<String, Object>) data2_1;
+        Map<?, ?> data2_1Map = (Map<?, ?>) data2_1;
         assertEquals( "jb-bxms-6.3-candidate", data2_1Map.get( "name" ) );
         assertEquals( 8829, data2_1Map.get( "id" ) );
     }

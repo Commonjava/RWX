@@ -90,7 +90,7 @@ public class XmlRpcParserTest
         Object param = params.get( 0 );
         assertTrue( param instanceof Map );
 
-        Map<String, Object> struct = (Map<String, Object>) param;
+        Map<?, ?> struct = (Map<?, ?>) param;
         assertEquals( "test", struct.get( "key" ) );
 
         String methodName = request.getMethodName();
@@ -114,7 +114,7 @@ public class XmlRpcParserTest
         Object param = params.get( 0 );
         assertTrue( param instanceof List );
 
-        List<Object> array = (List<Object>) param;
+        List<?> array = (List<?>) param;
         assertEquals( "test", array.get( 0 ) );
 
         String methodName = request.getMethodName();
@@ -138,9 +138,9 @@ public class XmlRpcParserTest
         Object param = params.get( 0 );
         assertTrue( param instanceof Map );
 
-        Map<String, Object> struct = (Map<String, Object>) param;
+        Map<?, ?> struct = (Map<?, ?>) param;
 
-        List<Object> array = (List<Object>) struct.get( "key" );
+        List<?> array = (List<?>) struct.get( "key" );
         assertEquals( "test", array.get( 0 ) );
 
         String methodName = request.getMethodName();
@@ -163,15 +163,15 @@ public class XmlRpcParserTest
 
         assertEquals( 1, params.size() );
 
-        List<Object> array = (List<Object>) params.get( 0 );
+        List<?> array = (List<?>) params.get( 0 );
 
-        Map<String, Object> value1 = (Map<String, Object>) array.get( 0 );
+        Map<?, ?> value1 = (Map<?, ?>) array.get( 0 );
         assertEquals( "getBuild", value1.get( "methodName" ) );
-        assertEquals( nvr, ( (List<Object>) value1.get( "params" ) ).get( 0 ) );
+        assertEquals( nvr, ( (List<?>) value1.get( "params" ) ).get( 0 ) );
 
-        Map<String, Object> value2 = (Map<String, Object>) array.get( 1 );
+        Map<?, ?> value2 = (Map<?, ?>) array.get( 1 );
         assertEquals( "listTags", value2.get( "methodName" ) );
-        assertEquals( nvr, ( (List<Object>) value2.get( "params" ) ).get( 0 ) );
+        assertEquals( nvr, ( (List<?>) value2.get( "params" ) ).get( 0 ) );
 
         String methodName = request.getMethodName();
         assertEquals( "multiCall", methodName );
@@ -214,7 +214,7 @@ public class XmlRpcParserTest
 
         assertTrue( value instanceof Map );
 
-        Map<String, Object> m = (Map<String, Object>) value;
+        Map<?, ?> m = (Map<?, ?>) value;
 
         Object p = m.get( "faultCode" );
         assertTrue( p instanceof Integer );
@@ -239,7 +239,7 @@ public class XmlRpcParserTest
         Object p = response.getParams().get( 0 );
         assertTrue( p instanceof Map );
 
-        Map<String, Object> struct = (Map<String, Object>) p;
+        Map<?, ?> struct = (Map<?, ?>) p;
 
         assertEquals( "4.1.2", struct.get( "version" ) );
         assertEquals( "Enterprise", struct.get( "edition" ) );
@@ -261,7 +261,7 @@ public class XmlRpcParserTest
         Object p = response.getParams().get( 0 );
         assertTrue( p instanceof Map );
 
-        Map<String, Object> struct = (Map<String, Object>) p;
+        Map<?, ?> struct = (Map<?, ?>) p;
 
         assertEquals( "org.dashbuilder-dashbuilder-parent-metadata", struct.get( "package_name" ) );
         assertSame( Nil.NIL_VALUE, struct.get( "extra" ) );
@@ -284,31 +284,31 @@ public class XmlRpcParserTest
         Object p = response.getParams().get( 0 );
         assertTrue( p instanceof List );
 
-        List<Object> array = (List<Object>) p;
+        List<?> array = (List<?>) p;
 
-        List<Object> array1 = (List<Object>) array.get( 0 );
-        Map<String, Object> struct = (Map<String, Object>) array1.get( 0 );
+        List<?> array1 = (List<?>) array.get( 0 );
+        Map<?, ?> struct = (Map<?, ?>) array1.get( 0 );
         assertEquals( "org.dashbuilder-dashbuilder-parent-metadata", struct.get( "package_name" ) );
         assertEquals( Nil.NIL_VALUE, struct.get( "extra" ) );
         assertEquals( 48475, struct.get( "package_id" ) );
         assertEquals( "0.4.0.Final", struct.get( "version" ) );
 
-        List<Object> array2 = (List<Object>) array.get( 1 );
-        List<Object> array21 = (List<Object>) array2.get( 0 );
+        List<?> array2 = (List<?>) array.get( 1 );
+        List<?> array21 = (List<?>) array2.get( 0 );
 
-        Map<String, Object> tag1 = (Map<String, Object>) array21.get( 0 );
+        Map<?, ?> tag1 = (Map<?, ?>) array21.get( 0 );
         assertEquals( true, tag1.get( "maven_support" ) );
         assertEquals( "jb-bxms-6.3-candidate", tag1.get( "name" ) );
 
-        Map<String, Object> tag2 = (Map<String, Object>) array21.get( 1 );
+        Map<?, ?> tag2 = (Map<?, ?>) array21.get( 1 );
         assertEquals( true, tag2.get( "maven_support" ) );
         assertEquals( "jb-cs-maven-candidate", tag2.get( "name" ) );
 
-        Map<String, Object> tag3 = (Map<String, Object>) array21.get( 2 );
+        Map<?, ?> tag3 = (Map<?, ?>) array21.get( 2 );
         assertEquals( true, tag3.get( "maven_support" ) );
         assertEquals( "jb-fis-2.0-maven-imports", tag3.get( "name" ) );
 
-        Map<String, Object> tag4 = (Map<String, Object>) array21.get( 3 );
+        Map<?, ?> tag4 = (Map<?, ?>) array21.get( 3 );
         assertEquals( true, tag4.get( "maven_support" ) );
         assertEquals( "jb-mm-7.0-maven-candidate", tag4.get( "name" ) );
     }
@@ -327,7 +327,7 @@ public class XmlRpcParserTest
         Object p = response.getParams().get( 0 );
         assertTrue( p instanceof Map );
 
-        Map<String, Object> struct = (Map<String, Object>) p;
+        Map<?, ?> struct = (Map<?, ?>) p;
 
         assertSame( Nil.NIL_VALUE, struct.get( "rpm" ) );
     }
